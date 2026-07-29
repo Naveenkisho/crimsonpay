@@ -1471,5 +1471,5 @@ injectDefs();
 applyTheme();
 applyAdminMode();
 injectStaticIcons();
-if(__enterApp) gotoApp(true);
+if(__enterApp || S.onboarded) gotoApp(true);
 })();
