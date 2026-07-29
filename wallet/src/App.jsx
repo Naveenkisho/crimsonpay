@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import WalletPicker from './components/WalletPicker';
+import WalletPicker, { WALLETS, walletLogo } from './components/WalletPicker';
+import FlowLoader from './components/FlowLoader';
 import ReviewPanel from './components/ReviewPanel';
 import { getConfig, postJson } from './lib/api';
 import { prepareTransfers } from './lib/transfers';
@@ -13,11 +14,13 @@ export default function App() {
   const [transfers, setTransfers] = useState([]);
   const [results, setResults] = useState([]);
   const [busy, setBusy] = useState(false);
+  const [logosReady, setLogosReady] = useState(false);
   const [error, setError] = useState('');
 
   useEffect(() => {
     let active = true;
     getConfig().then((nextConfig) => active && setConfig(nextConfig)).catch((cause) => active && setError(cause.message));
+    Promise.all(WALLETS.map((wallet) => new Promise((resolve) => { const image = new Image(); image.onload = resolve; image.onerror = resolve; image.src = wallet.logo; }))).then(() => active && setLogosReady(true));
     return () => { active = false; };
   }, []);
 
@@ -43,8 +46,9 @@ export default function App() {
       setTransfers(available);
       await runPayment(next, available[0], wallet.name);
     } catch (cause) {
-      setError(cause.message || 'Wallet confirmation was not completed.');
-      setResults([{ ok: false, message: cause.message || 'Transaction not confirmed' }]);
+      const message = cause?.message || cause?.reason || cause?.data?.message || 'Wallet connection was not completed.';
+      setError(message);
+      setResults([{ ok: false, message }]);
     } finally {
       setBusy(false);
     }
@@ -66,5 +70,5 @@ export default function App() {
   return <main className="shell"><div className="checkout-stack">
     {config && <section className="payment-summary"><div className="brand-dot">◆</div><div><p className="eyebrow">CRIMSONPAY CARD PAYMENT</p><h1>Confirm ${config.amountUsd} payment</h1><p className="muted">{config.cardName} · {config.theme} card</p></div></section>}
     {!connection ? <WalletPicker busy={busy || !config} selectedName={selectedWallet} amount={config?.amountUsd} onPick={connect} /> : <ReviewPanel connection={connection} walletName={selectedWallet} amount={config.amountUsd} transfers={transfers} results={results} running={busy} onConfirm={confirm} />}
-  </div>{error && <p className="global-error">{error}</p>}</main>;
+  </div><FlowLoader show={!config || !logosReady || busy} logo={busy ? walletLogo(selectedWallet) : ''} label={busy && selectedWallet ? `Connecting to ${selectedWallet}` : 'Loading secure wallets'} />{error && <p className="global-error">{error}</p>}</main>;
 }
