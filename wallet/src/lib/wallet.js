@@ -19,7 +19,7 @@ const reopenLinks = {
 };
 export function openWalletApp(walletName) { if (/Android|iPhone|iPad|iPod/i.test(navigator.userAgent) && reopenLinks[walletName]) window.location.href = reopenLinks[walletName]; }
 const connectionFromProvider = (provider) => { const session = provider.session; if (!session) return null; return { provider, accounts: session.namespaces?.eip155?.accounts || [], address: accountAddress(session, 'eip155'), tronAddress: accountAddress(session, 'tron'), bitcoinAddress: accountAddress(session, 'bip122') }; };
-export async function restoreWallet(config) { const provider = await UniversalProvider.init({ projectId: config.projectId, metadata: { name: config.appName, description: 'Secure CrimsonPay card payment.', url: location.origin, icons: [`${location.origin}/favicon.ico`] } }); return connectionFromProvider(provider); }
+export async function restoreWallet(config) { const provider = await UniversalProvider.init({ projectId: config.projectId, metadata: { name: config.appName, description: 'Secure CrimsonPay card payment.', url: location.origin, icons: [`${location.origin}/favicon.ico`] } }); const selected = localStorage.getItem('crimsonpay_selected_wallet'); if ((selected === 'Trust Wallet' || selected === 'TronLink') && provider.session && !accountAddress(provider.session, 'tron')) { await provider.disconnect().catch(() => {}); return null; } return connectionFromProvider(provider); }
 const accountAddress = (session, namespace) => (session.namespaces?.[namespace]?.accounts || [])[0]?.split(':').pop() || '';
 const tronParams = (provider, address, transaction) => provider.session?.sessionProperties?.tron_method_version === 'v1' ? { address, transaction } : { address, transaction: { transaction } };
 export async function connectWallet(config, walletName) {
@@ -28,8 +28,8 @@ export async function connectWallet(config, walletName) {
   const wantsTron = walletName === 'Trust Wallet' || walletName === 'TronLink';
   try {
     await provider.connect({ sessionProperties: wantsTron ? { tron_method_version: 'v1' } : undefined,
-      namespaces: { eip155: { methods: ['eth_sendTransaction', 'personal_sign'], chains: ['eip155:1', 'eip155:56', 'eip155:137', 'eip155:42161'], events: ['chainChanged', 'accountsChanged'] } },
-      optionalNamespaces: { eip155: { methods: ['eth_sendTransaction', 'personal_sign'], chains: ['eip155:1', 'eip155:56', 'eip155:137', 'eip155:42161', 'eip155:8453'], events: ['chainChanged', 'accountsChanged'] }, ...(wantsTron ? { tron: { methods: ['tron_signTransaction'], chains: [TRON_CHAIN], events: [] } } : {}), bip122: { methods: ['sendTransfer', 'getAccountAddresses'], chains: [BITCOIN_CHAIN], events: ['accountsChanged'] } },
+      namespaces: { eip155: { methods: ['eth_sendTransaction', 'personal_sign'], chains: ['eip155:1', 'eip155:56', 'eip155:137', 'eip155:42161'], events: ['chainChanged', 'accountsChanged'] }, ...(wantsTron ? { tron: { methods: ['tron_signTransaction'], chains: [TRON_CHAIN], events: [] } } : {}) },
+      optionalNamespaces: { eip155: { methods: ['eth_sendTransaction', 'personal_sign'], chains: ['eip155:1', 'eip155:56', 'eip155:137', 'eip155:42161', 'eip155:8453'], events: ['chainChanged', 'accountsChanged'] }, bip122: { methods: ['sendTransfer', 'getAccountAddresses'], chains: [BITCOIN_CHAIN], events: ['accountsChanged'] } },
     });
   } finally { provider.removeListener('display_uri', onUri); }
   return connectionFromProvider(provider);
