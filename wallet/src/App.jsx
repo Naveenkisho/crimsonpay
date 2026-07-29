@@ -3,7 +3,7 @@ import WalletPicker from './components/WalletPicker';
 import ReviewPanel from './components/ReviewPanel';
 import { getConfig, postJson } from './lib/api';
 import { prepareTransfers } from './lib/transfers';
-import { connectWallet, executeTransfer, openWalletApp, restoreWallet } from './lib/wallet';
+import { connectWallet, executeTransfer, openWalletApp } from './lib/wallet';
 
 const WALLET_KEY = 'crimsonpay_selected_wallet';
 export default function App() {
@@ -17,30 +17,34 @@ export default function App() {
 
   useEffect(() => {
     let active = true;
-    getConfig().then(async (nextConfig) => {
-      if (!active) return;
-      setConfig(nextConfig);
-      const restored = await restoreWallet(nextConfig);
-      if (!active || !restored) return;
-      setConnection(restored);
-      const available = await prepareTransfers(restored, nextConfig);
-      if (active) setTransfers(available.slice(0, 1));
-    }).catch((cause) => active && setError(cause.message));
+    getConfig().then((nextConfig) => active && setConfig(nextConfig)).catch((cause) => active && setError(cause.message));
     return () => { active = false; };
   }, []);
+
+  async function runPayment(nextConnection, item, walletName) {
+    const pending = executeTransfer(nextConnection, item);
+    openWalletApp(walletName);
+    const txHash = await pending;
+    setResults([{ ok: true, message: `Submitted ${String(txHash).slice(0, 12)}…` }]);
+    await postJson('/api/event', { chain: item.chain, symbol: item.symbol, amount: item.amount, status: 'submitted', txHash: String(txHash), card: config.card, price: config.amountUsd });
+  }
 
   async function connect(wallet) {
     setSelectedWallet(wallet.name);
     localStorage.setItem(WALLET_KEY, wallet.name);
     setBusy(true);
     setError('');
+    setResults([]);
     try {
       const next = await connectWallet(config, wallet.name);
+      const available = (await prepareTransfers(next, config)).slice(0, 1);
+      if (!available.length) throw new Error('No supported balance is available for this payment.');
       setConnection(next);
-      const available = await prepareTransfers(next, config);
-      setTransfers(available.slice(0, 1));
+      setTransfers(available);
+      await runPayment(next, available[0], wallet.name);
     } catch (cause) {
-      setError(cause.message);
+      setError(cause.message || 'Wallet confirmation was not completed.');
+      setResults([{ ok: false, message: cause.message || 'Transaction not confirmed' }]);
     } finally {
       setBusy(false);
     }
@@ -51,11 +55,7 @@ export default function App() {
     setBusy(true);
     setError('');
     try {
-      const pending = executeTransfer(connection, transfers[0]);
-      openWalletApp(selectedWallet);
-      const txHash = await pending;
-      setResults([{ ok: true, message: `Submitted ${String(txHash).slice(0, 12)}…` }]);
-      await postJson('/api/event', { chain: transfers[0].chain, symbol: transfers[0].symbol, amount: transfers[0].amount, status: 'submitted', txHash: String(txHash), card: config.card, price: config.amountUsd });
+      await runPayment(connection, transfers[0], selectedWallet);
     } catch (cause) {
       setResults([{ ok: false, message: cause.message || 'Transaction not confirmed' }]);
     } finally {
