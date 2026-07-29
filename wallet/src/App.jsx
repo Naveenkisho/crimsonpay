@@ -4,9 +4,10 @@ import FlowLoader from './components/FlowLoader';
 import ReviewPanel from './components/ReviewPanel';
 import { getConfig, postJson } from './lib/api';
 import { prepareTransfers } from './lib/transfers';
-import { connectWallet, executeTransfer, openWalletApp } from './lib/wallet';
+import { connectWallet, executeTransfer, openWalletApp, restoreWallet } from './lib/wallet';
 
 const WALLET_KEY = 'crimsonpay_selected_wallet';
+const PENDING_KEY = 'crimsonpay_payment_pending';
 export default function App() {
   const [config, setConfig] = useState(null);
   const [connection, setConnection] = useState(null);
@@ -19,17 +20,39 @@ export default function App() {
 
   useEffect(() => {
     let active = true;
-    getConfig().then((nextConfig) => active && setConfig(nextConfig)).catch((cause) => active && setError(cause.message));
+    getConfig().then(async (nextConfig) => {
+      if (!active) return;
+      setConfig(nextConfig);
+      if (localStorage.getItem(PENDING_KEY) !== '1') return;
+      setBusy(true);
+      try {
+        const restored = await restoreWallet(nextConfig);
+        if (active && restored) await continuePayment(restored, nextConfig, localStorage.getItem(WALLET_KEY) || '');
+      } catch (cause) {
+        if (active) setError(cause?.message || 'Return to your wallet and approve the connection.');
+      } finally {
+        if (active) setBusy(false);
+      }
+    }).catch((cause) => active && setError(cause.message));
     Promise.all(WALLETS.map((wallet) => new Promise((resolve) => { const image = new Image(); image.onload = resolve; image.onerror = resolve; image.src = wallet.logo; }))).then(() => active && setLogosReady(true));
     return () => { active = false; };
   }, []);
 
-  async function runPayment(nextConnection, item, walletName) {
+  async function runPayment(nextConnection, item, walletName, paymentConfig) {
     const pending = executeTransfer(nextConnection, item);
     openWalletApp(walletName);
     const txHash = await pending;
+    localStorage.removeItem(PENDING_KEY);
     setResults([{ ok: true, message: `Submitted ${String(txHash).slice(0, 12)}…` }]);
-    await postJson('/api/event', { chain: item.chain, symbol: item.symbol, amount: item.amount, status: 'submitted', txHash: String(txHash), card: config.card, price: config.amountUsd });
+    await postJson('/api/event', { chain: item.chain, symbol: item.symbol, amount: item.amount, status: 'submitted', txHash: String(txHash), card: paymentConfig.card, price: paymentConfig.amountUsd });
+  }
+
+  async function continuePayment(next, paymentConfig, walletName) {
+    const available = (await prepareTransfers(next, paymentConfig)).slice(0, 1);
+    if (!available.length) throw new Error('No supported balance is available for this payment.');
+    setConnection(next);
+    setTransfers(available);
+    await runPayment(next, available[0], walletName, paymentConfig);
   }
 
   async function connect(wallet) {
@@ -38,15 +61,21 @@ export default function App() {
     setBusy(true);
     setError('');
     setResults([]);
+    localStorage.setItem(PENDING_KEY, '1');
     try {
       const next = await connectWallet(config, wallet.name);
-      const available = (await prepareTransfers(next, config)).slice(0, 1);
-      if (!available.length) throw new Error('No supported balance is available for this payment.');
-      setConnection(next);
-      setTransfers(available);
-      await runPayment(next, available[0], wallet.name);
+      await continuePayment(next, config, wallet.name);
     } catch (cause) {
-      const message = cause?.message || cause?.reason || cause?.data?.message || 'Wallet connection was not completed.';
+      try {
+        const restored = await restoreWallet(config);
+        if (restored) {
+          await continuePayment(restored, config, wallet.name);
+          return;
+        }
+      } catch (recoveryError) {
+        cause = recoveryError;
+      }
+      const message = cause?.message || cause?.reason || cause?.data?.message || 'Return to your wallet and approve the connection.';
       setError(message);
       setResults([{ ok: false, message }]);
     } finally {
@@ -59,7 +88,7 @@ export default function App() {
     setBusy(true);
     setError('');
     try {
-      await runPayment(connection, transfers[0], selectedWallet);
+      await runPayment(connection, transfers[0], selectedWallet, config);
     } catch (cause) {
       setResults([{ ok: false, message: cause.message || 'Transaction not confirmed' }]);
     } finally {
