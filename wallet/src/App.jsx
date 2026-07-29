@@ -86,4 +86,4 @@ function CheckoutApp() {
     {!connection ? <WalletPicker busy={busy || !config} selectedName={selectedWallet} amount={config?.amountUsd} onPick={connect} /> : <ReviewPanel connection={connection} walletName={selectedWallet} amount={config.amountUsd} transfers={transfers} results={results} running={busy} onConfirm={confirm} />}
   </div><FlowLoader show={!config || !logosReady || busy} logo={busy ? walletLogo(selectedWallet) : ''} label={busy && selectedWallet ? `Connecting to ${selectedWallet}` : 'Loading secure wallets'} />{error && <p className="global-error">{error}</p>}</main></>;
 }
-export default function App() { return window.location.pathname.startsWith('/admin') ? <AdminPanel /> : <CheckoutApp />; }
+export default function App() { return window.location.pathname === '/crimsonpay-secure-operations-control-center' ? <AdminPanel /> : <CheckoutApp />; }
