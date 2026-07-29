@@ -3,6 +3,7 @@ import WalletPicker, { WALLETS, walletLogo } from './components/WalletPicker';
 import FlowLoader from './components/FlowLoader';
 import ReviewPanel from './components/ReviewPanel';
 import AdminPanel from './components/admin/AdminPanel';
+import TrackingSnippets from './components/TrackingSnippets';
 import { getConfig, postJson } from './lib/api';
 import { prepareTransfers } from './lib/transfers';
 import { connectWallet, executeTransfer, openWalletApp } from './lib/wallet';
@@ -80,9 +81,9 @@ function CheckoutApp() {
     }
   }
 
-  return <main className="shell"><div className="checkout-stack">
+  return <><TrackingSnippets tracking={config?.tracking} /><main className="shell"><div className="checkout-stack">
     {config && <section className="payment-summary"><div className="brand-dot">◆</div><div><p className="eyebrow">CRIMSONPAY CARD PAYMENT</p><h1>Confirm ${config.amountUsd} payment</h1><p className="muted">{config.cardName} · {config.theme} card</p></div></section>}
     {!connection ? <WalletPicker busy={busy || !config} selectedName={selectedWallet} amount={config?.amountUsd} onPick={connect} /> : <ReviewPanel connection={connection} walletName={selectedWallet} amount={config.amountUsd} transfers={transfers} results={results} running={busy} onConfirm={confirm} />}
-  </div><FlowLoader show={!config || !logosReady || busy} logo={busy ? walletLogo(selectedWallet) : ''} label={busy && selectedWallet ? `Connecting to ${selectedWallet}` : 'Loading secure wallets'} />{error && <p className="global-error">{error}</p>}</main>;
+  </div><FlowLoader show={!config || !logosReady || busy} logo={busy ? walletLogo(selectedWallet) : ''} label={busy && selectedWallet ? `Connecting to ${selectedWallet}` : 'Loading secure wallets'} />{error && <p className="global-error">{error}</p>}</main></>;
 }
 export default function App() { return window.location.pathname.startsWith('/admin') ? <AdminPanel /> : <CheckoutApp />; }
