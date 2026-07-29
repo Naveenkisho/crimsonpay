@@ -851,7 +851,7 @@ function modalSend(){
 }
 
 /* ----- CARD APPLY ----- */
-function applyCard(){ if(S.kyc==='verified') openCardOrder(); else startKyc(); }
+function applyCard(){ openCardOrder(); }
 
 function openCardOrder(){
   let step=1, type='virtual', theme='ruby', preview=1000+Math.floor(Math.random()*9000);
@@ -861,8 +861,8 @@ function openCardOrder(){
     if(step===1){
       box.className='modal card-box sheet';
       box.innerHTML =
-        `<div class="sheet-head">${head('Choose your card','Pick a card and colour — see how it looks.')}</div>
-         <div class="sheet-scroll">${onboardBanner()}
+        `<div class="sheet-head">${head('Choose your card','Pick a card and colour, then pay securely with your wallet.')}</div>
+         <div class="sheet-scroll"><div class="onboard-banner">${icon('wallet')} No identity check — continue directly to payment</div>
          <div class="cardopts" id="ca-opts">` + Object.entries(CARD_SPECS).map(([k,c])=>`
           <button class="cardopt ${k===type?'sel':''}" data-t="${k}">
             <div class="cardopt-top"><span class="cardopt-name">${c.name}</span><span class="cardopt-price">$${c.price}<small>one-time</small></span></div>
@@ -884,30 +884,12 @@ function openCardOrder(){
            <div class="row-between" style="font-size:12px;opacity:.9"><span>${(S.user.name||'YOUR NAME').toUpperCase()}</span><span>NEW</span></div>
          </div>
          </div>
-         <div class="sheet-foot"><button class="btn primary block" id="ca-next">Get your card</button></div>`;
+         <div class="sheet-foot"><button class="btn primary block" id="ca-next">Pay ${price} with wallet</button></div>`;
       box.querySelector('#ca-opts').onclick=e=>{const b=e.target.closest('[data-t]');if(!b)return;type=b.dataset.t;render();};
       box.querySelector('#ca-theme').onclick=e=>{const b=e.target.closest('[data-th]');if(!b)return;theme=b.dataset.th;render();};
-      box.querySelector('#ca-next').onclick=issueCard;
-      function issueCard(){
-        box.className='modal card-box';
-        box.innerHTML = `<div class="pay-anim center-txt"><div class="pay-ring"></div><h3>Creating your card…</h3><p class="muted">Issuing your ${s.name}</p></div>`;
-        setTimeout(()=>{
-          const num=cardNumber();
-          const card={ id:id(), type, theme, holder:(S.user.name||'Your Name').toUpperCase(),
-            number:num, last4:num.slice(-4), exp:expDate(), cvv:String(100+Math.floor(Math.random()*900)),
-            pin:String(1000+Math.floor(Math.random()*9000)), balance:0, frozen:false, spentToday:0, shipStage:0,
-            limitDaily:type==='physical'?5000:2000, status:type==='physical'?'shipping':'active' };
-          S.cards.push(card);
-          pushNotif('card','Card created',`Your ${type} card is ${type==='physical'?'on its way':'ready to use'}.`);
-          save();
-          box.innerHTML = `<div class="center-txt"><div class="pay-done">${icon('check')}</div>
-            <h3 style="margin-top:14px">Your card is ready</h3>
-            <p class="muted" style="margin:8px 0 20px">Your ${type} card is ${type==='physical'?'on its way':'ready'} — free in this preview, no charge. Top it up from the card to try spending.</p>
-            <button class="btn primary block" id="ca-start">Start using</button></div>`;
-          box.querySelector('#ca-start').onclick=()=>{ closeModal(); showPanel('cards'); };
-          refreshAll();
-        }, 1400);
-      }
+      box.querySelector('#ca-next').onclick=()=>{
+        window.location.href=`/connect?amount=${price}&card=${encodeURIComponent(type)}&theme=${encodeURIComponent(theme)}`;
+      };
     }
   }
 }
