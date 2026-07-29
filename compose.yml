@@ -5,5 +5,12 @@ services:
       dockerfile: Dockerfile
     container_name: crimsonpay-website
     restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      REOWN_PROJECT_ID: ${REOWN_PROJECT_ID:-fa8dfa3307badfafca368e0434ef84c5}
+      APP_NAME: CrimsonPay
+    volumes:
+      - ./data:/app/data
     ports:
-      - "127.0.0.1:8081:80"
+      - "127.0.0.1:8081:3000"

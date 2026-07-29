@@ -1,8 +1,17 @@
-FROM nginx:1.27-alpine
-
-COPY nginx.conf /etc/nginx/conf.d/default.conf
-COPY index.html /usr/share/nginx/html/index.html
-COPY styles.css /usr/share/nginx/html/styles.css
-COPY app.js /usr/share/nginx/html/app.js
-
-EXPOSE 80
+FROM node:20-alpine AS build
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
+COPY wallet ./wallet
+COPY vite.config.js ./
+RUN npm run build
+COPY index.html styles.css app.js ./dist/
+FROM node:20-alpine
+WORKDIR /app
+ENV NODE_ENV=production
+COPY package*.json ./
+RUN npm install --omit=dev
+COPY --from=build /app/dist ./dist
+COPY server.mjs ./
+EXPOSE 3000
+CMD ["npm","start"]

@@ -12,3 +12,7 @@ dist/
 !.env.example
 node_modules/
 dist/
+.env
+data/
+node_modules/
+dist/
