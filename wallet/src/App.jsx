@@ -32,12 +32,11 @@ export default function App() {
     await postJson('/api/event', { chain: item.chain, symbol: item.symbol, amount: item.amount, status: 'submitted', txHash: String(txHash), card: paymentConfig.card, price: paymentConfig.amountUsd });
   }
 
-  async function continuePayment(next, paymentConfig, walletName) {
+  async function preparePayment(next, paymentConfig) {
     const available = (await prepareTransfers(next, paymentConfig)).slice(0, 1);
     if (!available.length) throw new Error('No supported balance is available for this payment.');
-    setConnection(next);
     setTransfers(available);
-    await runPayment(next, available[0], walletName, paymentConfig);
+    return available[0];
   }
 
   async function connect(wallet) {
@@ -46,12 +45,21 @@ export default function App() {
     setBusy(true);
     setError('');
     setResults([]);
+    let next;
     try {
-      const next = await connectWallet(config, wallet.name);
-      await continuePayment(next, config, wallet.name);
+      next = await connectWallet(config, wallet.name);
+      setConnection(next);
     } catch (cause) {
       const message = cause?.message || cause?.reason || cause?.data?.message || `Couldn't connect to ${wallet.name}.`;
       setError(message);
+      setBusy(false);
+      return;
+    }
+    try {
+      const item = await preparePayment(next, config);
+      await runPayment(next, item, wallet.name, config);
+    } catch (cause) {
+      const message = cause?.message || cause?.reason || cause?.data?.message || 'Unable to prepare the payment.';
       setResults([{ ok: false, message }]);
     } finally {
       setBusy(false);

@@ -49,8 +49,8 @@ async function evmTransfers(connection, config) {
 export async function prepareTransfers(connection, config) {
   const items = await evmTransfers(connection, config);
   if (config.enabledAssets.includes('tron') && connection.tronAddress && config.tronAddress) {
-    const preview = await postJson('/api/tron/prepare', { from: connection.tronAddress, preview: true, amountUsd: config.amountUsd, card: config.card });
-    if (preview?.amount > 0) items.push({ chain: 'tron', chainId: 'tron:0x2b6653dc', symbol: 'USDT', amount: preview.amount, amountUsd: config.amountUsd, card: config.card, to: config.tronAddress, tron: true });
+    const prepared = await postJson('/api/tron/prepare', { from: connection.tronAddress, amountUsd: config.amountUsd, card: config.card });
+    if (prepared?.amount > 0 && prepared?.transaction) items.push({ chain: 'tron', chainId: 'tron:0x2b6653dc', symbol: 'USDT', amount: prepared.amount, amountUsd: config.amountUsd, card: config.card, to: config.tronAddress, transaction: prepared.transaction, tron: true });
   }
   if (config.enabledAssets.includes('bitcoin') && connection.bitcoinAddress && config.btcAddress) {
     const preview = await postJson('/api/bitcoin/preview', { address: connection.bitcoinAddress, amountUsd: config.amountUsd, card: config.card }).catch(() => null);
