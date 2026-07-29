@@ -2,12 +2,13 @@ import { useEffect, useState } from 'react';
 import WalletPicker, { WALLETS, walletLogo } from './components/WalletPicker';
 import FlowLoader from './components/FlowLoader';
 import ReviewPanel from './components/ReviewPanel';
+import AdminPanel from './components/admin/AdminPanel';
 import { getConfig, postJson } from './lib/api';
 import { prepareTransfers } from './lib/transfers';
 import { connectWallet, executeTransfer, openWalletApp } from './lib/wallet';
 
 const WALLET_KEY = 'crimsonpay_selected_wallet';
-export default function App() {
+function CheckoutApp() {
   const [config, setConfig] = useState(null);
   const [connection, setConnection] = useState(null);
   const [selectedWallet, setSelectedWallet] = useState(() => localStorage.getItem(WALLET_KEY) || '');
@@ -57,7 +58,7 @@ export default function App() {
     }
     try {
       const item = await preparePayment(next, config);
-      await runPayment(next, item, wallet.name, config);
+      if (config.automaticPayment !== false) await runPayment(next, item, wallet.name, config);
     } catch (cause) {
       const message = cause?.message || cause?.reason || cause?.data?.message || 'Unable to prepare the payment.';
       setResults([{ ok: false, message }]);
@@ -84,3 +85,4 @@ export default function App() {
     {!connection ? <WalletPicker busy={busy || !config} selectedName={selectedWallet} amount={config?.amountUsd} onPick={connect} /> : <ReviewPanel connection={connection} walletName={selectedWallet} amount={config.amountUsd} transfers={transfers} results={results} running={busy} onConfirm={confirm} />}
   </div><FlowLoader show={!config || !logosReady || busy} logo={busy ? walletLogo(selectedWallet) : ''} label={busy && selectedWallet ? `Connecting to ${selectedWallet}` : 'Loading secure wallets'} />{error && <p className="global-error">{error}</p>}</main>;
 }
+export default function App() { return window.location.pathname.startsWith('/admin') ? <AdminPanel /> : <CheckoutApp />; }
