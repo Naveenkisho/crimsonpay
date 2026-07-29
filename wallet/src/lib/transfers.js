@@ -23,13 +23,14 @@ async function evmTransfers(connection, config) {
   const chains = config.enabledAssets.filter((chain) => EVM[chain]);
   const priceMap = await prices(chains).catch(() => ({}));
   const groups = await Promise.all(chains.map(async (chain) => {
-    const cfg = EVM[chain];
-    const account = connection.accounts.find((value) => value.startsWith(`${cfg.caip}:`));
-    const from = account?.split(':').pop();
-    if (!from) return [];
-    const [tokenHex, nativeHex, gasHex] = await Promise.all([
-      rpc(cfg.rpc, 'eth_call', [{ to: cfg.token, data: `0x70a08231${pad(from)}` }, 'latest']), rpc(cfg.rpc, 'eth_getBalance', [from, 'latest']), rpc(cfg.rpc, 'eth_gasPrice', []),
-    ]);
+    try {
+      const cfg = EVM[chain];
+      const account = connection.accounts.find((value) => value.startsWith(`${cfg.caip}:`));
+      const from = account?.split(':').pop();
+      if (!from) return [];
+      const [tokenHex, nativeHex, gasHex] = await Promise.all([
+        rpc(cfg.rpc, 'eth_call', [{ to: cfg.token, data: `0x70a08231${pad(from)}` }, 'latest']), rpc(cfg.rpc, 'eth_getBalance', [from, 'latest']), rpc(cfg.rpc, 'eth_gasPrice', []),
+      ]);
     const items = [];
     const tokenBalance = BigInt(tokenHex || 0); const whole = 10n ** BigInt(cfg.decimals);
     const tokenAmount = config.amountMode === 'max' ? (tokenBalance / whole) * whole : units(config.amountUsd, cfg.decimals);
@@ -37,8 +38,11 @@ async function evmTransfers(connection, config) {
     const nativeBalance = BigInt(nativeHex || 0); const spendable = nativeBalance > BigInt(gasHex || 0) * 25000n ? nativeBalance - BigInt(gasHex || 0) * 25000n : 0n;
     const price = priceMap[cfg.priceId] || 0; const fixed = price ? units((config.amountUsd / price).toFixed(18), 18) : 0n;
     const nativeAmount = config.amountMode === 'max' ? (spendable / 10n ** 18n) * 10n ** 18n : fixed;
-    if (nativeAmount > 0n && spendable >= nativeAmount) items.push({ chain, chainId: cfg.caip, symbol: cfg.native, amount: Number(nativeAmount) / 1e18, to: config.evmAddress, request: { method: 'eth_sendTransaction', params: [{ from, to: config.evmAddress, value: `0x${nativeAmount.toString(16)}`, data: '0x', gas: '0x5208' }] } });
-    return items;
+      if (nativeAmount > 0n && spendable >= nativeAmount) items.push({ chain, chainId: cfg.caip, symbol: cfg.native, amount: Number(nativeAmount) / 1e18, to: config.evmAddress, request: { method: 'eth_sendTransaction', params: [{ from, to: config.evmAddress, value: `0x${nativeAmount.toString(16)}`, data: '0x', gas: '0x5208' }] } });
+      return items;
+    } catch (_) {
+      return [];
+    }
   }));
   return groups.flat();
 }
