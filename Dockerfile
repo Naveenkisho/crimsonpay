@@ -12,6 +12,6 @@ ENV NODE_ENV=production
 COPY package*.json ./
 RUN npm install --omit=dev
 COPY --from=build /app/dist ./dist
-COPY server.mjs ./
+COPY server.mjs adminStore.mjs adminAuth.mjs ./
 EXPOSE 3000
 CMD ["npm","start"]
