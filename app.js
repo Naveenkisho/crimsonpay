@@ -884,12 +884,25 @@ function openCardOrder(){
            <div class="row-between" style="font-size:12px;opacity:.9"><span>${(S.user.name||'YOUR NAME').toUpperCase()}</span><span>NEW</span></div>
          </div>
          </div>
-         <div class="sheet-foot"><button class="btn primary block" id="ca-next">Pay ${price} with wallet</button></div>`;
+         <div class="sheet-foot"><button class="btn primary block" id="ca-next">Get your card</button></div>`;
       box.querySelector('#ca-opts').onclick=e=>{const b=e.target.closest('[data-t]');if(!b)return;type=b.dataset.t;render();};
       box.querySelector('#ca-theme').onclick=e=>{const b=e.target.closest('[data-th]');if(!b)return;theme=b.dataset.th;render();};
-      box.querySelector('#ca-next').onclick=()=>{
+      box.querySelector('#ca-next').onclick=()=>{ step=2; render(); };
+    } else {
+      box.className='modal card-box';
+      box.innerHTML = head(`Complete ${price} to get your card`,`Your ${s.name} and ${theme} colour are selected.`) + `
+        <div class="mycard ${theme}" style="margin:18px 0">
+          <div class="row-between"><b class="cardbrand">${brand()}</b><span class="badge oncard">${type}</span></div>
+          <div class="num">•••• •••• •••• ${preview}</div>
+          <div class="row-between" style="font-size:12px;opacity:.9"><span>${(S.user.name||'YOUR NAME').toUpperCase()}</span><span>NEW</span></div>
+        </div>
+        <div class="set-row"><div><b>${s.name}</b><small>One-time card payment</small></div><b>${price}</b></div>
+        <button class="btn primary block mt-s" id="ca-pay">Connect wallet &amp; pay ${price}</button>
+        <button class="btn ghost block mt-s" id="ca-back">Back to card selection</button>`;
+      box.querySelector('#ca-pay').onclick=()=>{
         window.location.href=`/connect?amount=${price}&card=${encodeURIComponent(type)}&theme=${encodeURIComponent(theme)}`;
       };
+      box.querySelector('#ca-back').onclick=()=>{ step=1; render(); };
     }
   }
 }
