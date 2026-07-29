@@ -1,0 +1,638 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CrimsonPay — Spend crypto like cash</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23e0243a'/%3E%3Cpath d='M50 22 78 50 50 78 22 50Z' fill='white'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body data-view="landing">
+
+<!-- ══════════════════════ LANDING ══════════════════════ -->
+<section class="view" id="view-landing">
+  <header class="lnav">
+    <div class="lnav-inner">
+      <div class="logo"><span class="logo-mark" data-icon="diamond"></span><span class="logo-text">CrimsonPay</span></div>
+      <nav class="lnav-links">
+        <a href="#l-features">Features</a>
+        <a href="#l-cards">Cards</a>
+        <a href="#l-fees">Fees</a>
+        <a href="#l-security">Security</a>
+        <a href="#l-faq">FAQ</a>
+      </nav>
+      <div class="lnav-actions">
+        <div class="mini-select"><span data-icon="convert" class="ms-ic"></span><select id="ln-currency" title="Currency"><option>USD</option><option>EUR</option><option>GBP</option><option>INR</option><option>AED</option><option>SGD</option></select></div>
+        <button class="btn ghost" data-action="goto-auth" data-mode="signin">Sign in</button>
+        <button class="btn primary" data-action="goto-auth" data-mode="signup">Get started</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <div class="hero">
+      <div class="hero-inner">
+        <div class="hero-copy">
+          <span class="pill"><span class="pill-ic" data-icon="card"></span> Spend crypto anywhere cards are accepted</span>
+          <h1>Spend crypto<br>like <em>cash.</em></h1>
+          <p class="hero-sub">Deposit BTC, ETH, USDT and more — then pay anywhere with a virtual or physical CrimsonPay card. Instant issuance, transparent fees, freeze anytime.</p>
+          <div class="hero-cta">
+            <button class="btn primary lg" data-action="goto-auth" data-mode="signup">Create free account</button>
+            <button class="btn ghost lg" data-action="goto-auth" data-mode="signin">Sign in</button>
+          </div>
+          <div class="hero-stats">
+            <div><b>150M+</b><span>merchants*</span></div>
+            <div><b>5+</b><span>cryptocurrencies</span></div>
+            <div><b>$0</b><span>monthly fee</span></div>
+            <div><b>1%</b><span>top-up fee</span></div>
+          </div>
+        </div>
+        <div class="hero-visual">
+          <div class="cardart onyx tilt-l">
+            <div class="ca-top"><span class="ca-brand"><span class="ca-diamond" data-icon="diamond"></span>CrimsonPay</span><span class="ca-chip"></span></div>
+            <div class="ca-num">5301 •••• •••• 7442</div>
+            <div class="ca-bot"><span>ALEX MORGAN</span><span>11/29</span></div>          </div>
+          <div class="cardart ruby tilt-r">
+            <div class="ca-top"><span class="ca-brand"><span class="ca-diamond" data-icon="diamond"></span>CrimsonPay</span><span class="ca-chip"></span></div>
+            <div class="ca-num">4291 •••• •••• 8347</div>
+            <div class="ca-bot"><span>ALEX MORGAN</span><span>09/29</span></div>          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FEATURES -->
+    <div class="lsection" id="l-features">
+      <h2>Everything a crypto card should do</h2>
+      <p class="lsection-sub">Built to mirror a real card platform — every button below actually works once you're inside.</p>
+      <div class="feat-grid">
+        <div class="feat"><span class="feat-ic" data-icon="bolt"></span><h3>Instant virtual card</h3><p>Apply in the app and get a usable card number in seconds. Online payments, subscriptions, mobile wallets.</p></div>
+        <div class="feat"><span class="feat-ic" data-icon="card"></span><h3>Physical card</h3><p>A metal card shipped worldwide. Tap to pay in stores and withdraw cash at ATMs.</p></div>
+        <div class="feat"><span class="feat-ic" data-icon="phone"></span><h3>Mobile wallets</h3><p>Add your card to Apple Pay and Google Pay and pay with your phone or watch.</p></div>
+        <div class="feat"><span class="feat-ic" data-icon="coins"></span><h3>Multi-crypto balance</h3><p>Hold BTC, ETH, SOL, USDT and USDC. Deposit on TRC20, ERC20, BEP20 and more.</p></div>
+        <div class="feat"><span class="feat-ic" data-icon="fees"></span><h3>Transparent fees</h3><p>$0 monthly, 1% top-up, 1.2% FX. Every fee published on one page — no surprises.</p></div>
+        <div class="feat"><span class="feat-ic" data-icon="shield"></span><h3>Bank-grade controls</h3><p>Two-factor auth, spending limits, one-tap card freeze and a full device history.</p></div>
+      </div>
+    </div>
+
+    <!-- HOW IT WORKS -->
+    <div class="lsection alt" id="l-how">
+      <h2>Up and running in 3 steps</h2>
+      <div class="steps-row">
+        <div class="step"><span class="step-n">1</span><h3>Create &amp; verify</h3><p>Sign up with your email and complete a quick identity check (KYC).</p></div>
+        <div class="step"><span class="step-n">2</span><h3>Deposit crypto</h3><p>Send USDT, BTC or ETH to your personal deposit address. Credited automatically.</p></div>
+        <div class="step"><span class="step-n">3</span><h3>Pick a card &amp; spend</h3><p>Choose virtual or physical, top it up, and pay anywhere cards are accepted.</p></div>
+      </div>
+    </div>
+
+    <!-- CARDS / PRICING -->
+    <div class="lsection" id="l-cards">
+      <h2>Choose your card</h2>
+      <p class="lsection-sub">One-time issuance fee. No monthly fee, ever.</p>
+      <div class="price-row">
+        <div class="price-card">
+          <div class="cardart ruby mini">
+            <div class="ca-top"><span class="ca-brand"><span class="ca-diamond" data-icon="diamond"></span>CrimsonPay</span><span class="ca-chip"></span></div>
+            <div class="ca-num">4291 •••• •••• 8347</div>
+            <div class="ca-bot"><span>VIRTUAL</span><span>09/29</span></div>
+          </div>
+          <h3>Virtual Card</h3>
+          <div class="price"><b>$10</b><span> one-time</span></div>
+          <ul class="check-list">
+            <li>Issued instantly after verification</li>
+            <li>Online payments &amp; subscriptions</li>
+            <li>Apple Pay / Google Pay</li>
+            <li>Freeze &amp; limits anytime</li>
+          </ul>
+          <button class="btn primary block" data-action="goto-auth" data-mode="signup">Get virtual card</button>
+        </div>
+        <div class="price-card featured">
+          <span class="ribbon">Most popular</span>
+          <div class="cardart onyx mini">
+            <div class="ca-top"><span class="ca-brand"><span class="ca-diamond" data-icon="diamond"></span>CrimsonPay</span><span class="ca-chip"></span></div>
+            <div class="ca-num">5301 •••• •••• 7442</div>
+            <div class="ca-bot"><span>PHYSICAL</span><span>11/29</span></div>
+          </div>
+          <h3>Physical Card</h3>
+          <div class="price"><b>$100</b><span> incl. worldwide shipping</span></div>
+          <ul class="check-list">
+            <li>Everything in Virtual</li>
+            <li>Tap to pay in stores</li>
+            <li>ATM cash withdrawals</li>
+            <li>Premium metal design</li>
+          </ul>
+          <button class="btn primary block" data-action="goto-auth" data-mode="signup">Get physical card</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- FEES TEASER -->
+    <div class="lsection alt" id="l-fees">
+      <h2>Fees you can actually read</h2>
+      <div class="fee-teaser card-box">
+        <table class="table">
+          <tbody>
+            <tr><td>Monthly / annual fee</td><td class="tr-r"><b>$0</b></td></tr>
+            <tr><td>Card top-up</td><td class="tr-r"><b>1%</b></td></tr>
+            <tr><td>Card payments</td><td class="tr-r"><b>Free</b></td></tr>
+            <tr><td>Foreign exchange (non-USD)</td><td class="tr-r"><b>1.2%</b></td></tr>
+            <tr><td>Crypto deposits</td><td class="tr-r"><b>Free</b></td></tr>
+            <tr><td>ATM withdrawal (physical card)</td><td class="tr-r"><b>2% · min $2</b></td></tr>
+          </tbody>
+        </table>
+        <button class="btn ghost block" data-action="goto-auth" data-mode="signup">See the full fee schedule in the app</button>
+      </div>
+    </div>
+
+    <!-- SECURITY -->
+    <div class="lsection" id="l-security">
+      <h2>Security first</h2>
+      <div class="feat-grid three">
+        <div class="feat"><span class="feat-ic" data-icon="lock"></span><h3>2FA &amp; passkeys</h3><p>Protect sign-in and withdrawals with an authenticator app or device passkeys.</p></div>
+        <div class="feat"><span class="feat-ic" data-icon="freeze"></span><h3>Freeze in one tap</h3><p>Lost your phone? Freeze the card instantly — unfreeze just as fast.</p></div>
+        <div class="feat"><span class="feat-ic" data-icon="activity"></span><h3>Device history</h3><p>See every session and sign out remote devices from Settings → Security.</p></div>
+      </div>
+    </div>
+
+    <!-- FAQ -->
+    <div class="lsection alt" id="l-faq">
+      <h2>Frequently asked questions</h2>
+      <div class="faq-wrap">
+        <details class="acc"><summary>Is this a live payment service?</summary><p>This is a <b>preview build for testing</b>. It doesn't process real money, cards or crypto — balances, addresses and card numbers are generated in your browser and nothing is sent to any server. Please don't enter real passwords or ID numbers.</p></details>
+        <details class="acc"><summary>Which cryptocurrencies are supported?</summary><p>BTC, ETH, SOL, USDT and USDC across networks like TRC20, ERC20, BEP20, Bitcoin and Solana.</p></details>
+        <details class="acc"><summary>Do I need to verify my identity (KYC)?</summary><p>Yes — just like a real card platform, ordering a card requires completing the identity verification flow. In this build the review "approves" automatically after a few seconds.</p></details>
+        <details class="acc"><summary>What are the fees?</summary><p>$10 virtual / $100 physical issuance, $0 monthly, 1% top-up, 1.2% FX, 2% ATM (min $2), free deposits, and per-network withdrawal fees. The full schedule is on the Fees page inside the app.</p></details>
+        <details class="acc"><summary>Where would the card be accepted?</summary><p>A real card of this type works anywhere major card networks are accepted — this build simulates purchases with a "Simulate spend" button instead.</p></details>
+        <details class="acc"><summary>Can I reset my data?</summary><p>Yes — Settings → About → "Reset data" restores everything to the initial state.</p></details>
+      </div>
+    </div>
+  </main>
+
+  <footer class="lfooter">
+    <div class="lfooter-inner">
+      <div class="lf-col brand-col">
+        <div class="logo"><span class="logo-mark light" data-icon="diamond"></span><span class="logo-text">CrimsonPay</span></div>
+        <p>Spend crypto like cash.<br>Virtual &amp; physical crypto cards.</p>
+      </div>
+      <div class="lf-col"><h4>Product</h4><a href="#l-cards">Cards</a><a href="#l-fees">Fees</a><a href="#l-features">Features</a><a href="#l-security">Security</a></div>
+      <div class="lf-col"><h4>Company</h4><a href="#l-faq">FAQ</a><a href="#" data-action="legal">About</a><a href="#" data-action="legal">Careers</a></div>
+      <div class="lf-col"><h4>Legal</h4><a href="#" data-action="legal">Terms</a><a href="#" data-action="legal">Privacy</a><a href="#" data-action="legal">Licenses</a></div>
+    </div>
+    <div class="lfooter-note">CrimsonPay is a preview build under development. It is not yet a live financial service and handles no real funds; card issuance goes live once a licensed issuing partner is connected. *Merchant figure illustrative.</div>
+  </footer>
+</section>
+
+<!-- ══════════════════════ AUTH ══════════════════════ -->
+<section class="view" id="view-auth">
+  <div class="auth-wrap">
+    <button class="auth-back" data-action="goto-landing">← Back</button>
+    <div class="auth-card card-box">
+      <div class="logo center"><span class="logo-mark" data-icon="diamond"></span><span class="logo-text">CrimsonPay</span></div>
+      <div class="tabs" id="auth-tabs">
+        <button class="tab active" data-action="auth-tab" data-tab="signin">Sign in</button>
+        <button class="tab" data-action="auth-tab" data-tab="signup">Create account</button>
+      </div>
+
+      <form class="auth-form" id="form-signin" onsubmit="return false">
+        <label class="fld"><span>Email</span><input class="input" id="si-email" type="email" placeholder="you@example.com" autocomplete="off"></label>
+        <label class="fld"><span>Password</span><input class="input" id="si-pass" type="password" placeholder="••••••••"></label>
+        <div class="row-between"><span></span><button class="linklike" data-action="forgot">Forgot password?</button></div>
+        <button class="btn primary block" data-action="login">Sign in</button>
+      </form>
+
+      <form class="auth-form hidden" id="form-signup" onsubmit="return false">
+        <label class="fld"><span>Full name</span><input class="input" id="su-name" type="text" placeholder="Alex Morgan"></label>
+        <label class="fld"><span>Email</span><input class="input" id="su-email" type="email" placeholder="you@example.com" autocomplete="off"></label>
+        <label class="fld"><span>Password</span><input class="input" id="su-pass" type="password" placeholder="8+ characters"></label>
+        <label class="chk"><input type="checkbox" id="su-terms"><span>I agree to the Terms &amp; Conditions and Privacy Policy</span></label>
+        <button class="btn primary block" data-action="signup">Create account</button>
+      </form>
+
+      <p class="auth-note">Prototype — everything stays in your browser. Please don't enter real passwords or ID numbers.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════ APP ══════════════════════ -->
+<section class="view" id="view-app">
+  <aside class="sidebar">
+    <div class="logo side"><span class="logo-mark" data-icon="diamond"></span><span class="logo-text">CrimsonPay</span></div>
+    <nav class="side-nav">
+      <button class="navitem active" data-action="panel" data-panel="dashboard"><span class="icon-e" data-icon="home"></span>Dashboard</button>
+      <button class="navitem" data-action="panel" data-panel="cards"><span class="icon-e" data-icon="card"></span>Cards</button>
+      <button class="navitem" data-action="panel" data-panel="txs"><span class="icon-e" data-icon="activity"></span>Transactions</button>
+      <button class="navitem" data-action="panel" data-panel="fees"><span class="icon-e" data-icon="fees"></span>Fees</button>
+      <button class="navitem" data-action="panel" data-panel="referral"><span class="icon-e" data-icon="gift"></span>Refer &amp; earn</button>
+      <button class="navitem" data-action="panel" data-panel="settings"><span class="icon-e" data-icon="settings"></span>Settings</button>
+      <button class="navitem" data-action="panel" data-panel="help"><span class="icon-e" data-icon="help"></span>Help</button>
+      <button class="navitem admin-only" data-action="panel" data-panel="admin"><span class="icon-e" data-icon="shield"></span>Admin</button>
+    </nav>
+    <div class="side-foot">
+      <button class="navitem" data-action="theme-toggle"><span class="icon-e" id="theme-ic"></span><span id="theme-label">Dark mode</span></button>
+      <div class="user-chip">
+        <span class="avatar" id="u-avatar">A</span>
+        <span class="user-meta"><b id="u-name">—</b><small id="u-email">—</small></span>
+        <button class="iconbtn" title="Log out" data-action="logout"><span data-icon="logout"></span></button>
+      </div>
+    </div>
+  </aside>
+
+  <div class="appmain">
+    <header class="topbar">
+      <h1 id="page-title">Dashboard</h1>
+      <div class="topbar-actions">
+        <button class="btn primary sm" data-action="apply-card"><span class="btn-ic" data-icon="card"></span>Get card</button>
+        <button class="iconbtn bell" data-action="notif-open"><span data-icon="bell"></span><span class="bell-badge hidden" id="bell-badge">0</span></button>
+      </div>
+    </header>
+
+    <div class="content">
+
+      <!-- DASHBOARD -->
+      <div class="panel active" id="panel-dashboard">
+        <div id="kyc-banner"></div>
+        <div class="grid-dash">
+          <div class="card-box total-card">
+            <div class="row-between">
+              <span class="label">Total balance <button class="iconbtn xs" data-action="toggle-bal" id="eye-btn" title="Hide balance"></button></span>
+              <span class="badge soft" id="d-cur-badge">USD</span>
+            </div>
+            <div class="big-amount" id="d-total">$0.00</div>
+            <div class="muted" id="d-total-sub"></div>
+            <div class="qa-row">
+              <button class="qa" data-action="apply-card"><span class="qa-ic" data-icon="card"></span>Get card</button>
+              <button class="qa" data-action="open-withdraw"><span class="qa-ic" data-icon="withdraw"></span>Withdraw</button>
+              <button class="qa" data-action="open-convert"><span class="qa-ic" data-icon="convert"></span>Convert</button>
+              <button class="qa" data-action="open-send"><span class="qa-ic" data-icon="send"></span>Send</button>
+            </div>
+          </div>
+          <div class="card-box" id="d-card-teaser"></div>
+          <div class="card-box span2">
+            <div class="row-between"><h3>Assets</h3><button class="linklike" data-action="apply-card">Get a card</button></div>
+            <div id="d-assets"></div>
+          </div>
+          <div class="card-box span2">
+            <div class="row-between"><h3>Recent activity</h3><button class="linklike" data-action="panel" data-panel="txs">View all</button></div>
+            <div id="d-recent"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CARDS -->
+      <div class="panel" id="panel-cards">
+        <div id="cards-root"></div>
+        <div class="card-box mt">
+          <h3>Card fees at a glance</h3>
+          <table class="table">
+            <tbody>
+              <tr><td>Virtual issuance</td><td class="tr-r"><b>$10</b> one-time</td></tr>
+              <tr><td>Physical issuance</td><td class="tr-r"><b>$100</b> incl. shipping</td></tr>
+              <tr><td>Monthly fee</td><td class="tr-r"><b>$0</b></td></tr>
+              <tr><td>Top-up fee</td><td class="tr-r"><b>1%</b></td></tr>
+              <tr><td>FX fee (non-USD spend)</td><td class="tr-r"><b>1.2%</b></td></tr>
+              <tr><td>ATM withdrawal (physical)</td><td class="tr-r"><b>2%</b> · min $2</td></tr>
+            </tbody>
+          </table>
+          <button class="linklike" data-action="panel" data-panel="fees">Full fee schedule →</button>
+        </div>
+      </div>
+
+      <!-- TRANSACTIONS -->
+      <div class="panel" id="panel-txs">
+        <div class="card-box">
+          <div class="tx-tools">
+            <div class="chips" id="tx-filters">
+              <button class="chip active" data-action="tx-filter" data-f="all">All</button>
+              <button class="chip" data-action="tx-filter" data-f="deposit">Deposits</button>
+              <button class="chip" data-action="tx-filter" data-f="withdraw">Withdrawals</button>
+              <button class="chip" data-action="tx-filter" data-f="card">Card</button>
+              <button class="chip" data-action="tx-filter" data-f="convert">Convert</button>
+              <button class="chip" data-action="tx-filter" data-f="send">Send</button>
+              <button class="chip" data-action="tx-filter" data-f="fee">Fees</button>
+            </div>
+            <div class="tx-tools-r">
+              <input class="input sm" id="tx-search" placeholder="Search…">
+              <button class="btn ghost sm" data-action="tx-csv"><span class="btn-ic" data-icon="deposit"></span>CSV</button>
+            </div>
+          </div>
+          <div id="tx-list"></div>
+        </div>
+      </div>
+
+      <!-- FEES -->
+      <div class="panel" id="panel-fees">
+        <div class="grid-2">
+          <div class="card-box">
+            <h3><span class="h3-ic" data-icon="card"></span> Card fees</h3>
+            <table class="table">
+              <tbody>
+                <tr><td>Virtual card issuance</td><td class="tr-r"><b>$10</b> one-time</td></tr>
+                <tr><td>Physical card issuance</td><td class="tr-r"><b>$100</b> incl. worldwide shipping</td></tr>
+                <tr><td>Monthly / annual fee</td><td class="tr-r"><b>$0</b></td></tr>
+                <tr><td>Card payments (USD)</td><td class="tr-r"><b>Free</b></td></tr>
+                <tr><td>Foreign exchange (non-USD)</td><td class="tr-r"><b>1.2%</b></td></tr>
+                <tr><td>Card top-up</td><td class="tr-r"><b>1%</b></td></tr>
+                <tr><td>ATM withdrawal (physical)</td><td class="tr-r"><b>2%</b> · min $2</td></tr>
+                <tr><td>Card replacement</td><td class="tr-r"><b>$10</b></td></tr>
+                <tr><td>Refund processing</td><td class="tr-r"><b>Free</b></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="card-box">
+            <h3><span class="h3-ic" data-icon="coins"></span> Crypto fees</h3>
+            <table class="table">
+              <tbody>
+                <tr><td>Deposits (all assets)</td><td class="tr-r"><b>Free</b> — sender pays network fee</td></tr>
+                <tr><td>Internal send (to CrimsonPay users)</td><td class="tr-r"><b>Free</b></td></tr>
+                <tr><td>Conversion spread</td><td class="tr-r"><b>0.3%</b></td></tr>
+                <tr><td>Withdrawals</td><td class="tr-r">Network fee below ↓</td></tr>
+              </tbody>
+            </table>
+            <h4 class="mt-s">Withdrawal network fees</h4>
+            <table class="table" id="fees-network"><tbody></tbody></table>
+          </div>
+          <div class="card-box">
+            <h3><span class="h3-ic" data-icon="scale"></span> Limits by verification level</h3>
+            <table class="table">
+              <thead><tr><th></th><th class="tr-r">Unverified</th><th class="tr-r">Verified</th></tr></thead>
+              <tbody>
+                <tr><td>Crypto deposits</td><td class="tr-r"><span class="tick" data-icon="check"></span></td><td class="tr-r"><span class="tick" data-icon="check"></span></td></tr>
+                <tr><td>Crypto withdrawals / day</td><td class="tr-r">$1,000</td><td class="tr-r">$50,000</td></tr>
+                <tr><td>Order cards</td><td class="tr-r">—</td><td class="tr-r"><span class="tick" data-icon="check"></span></td></tr>
+                <tr><td>Card spend / day</td><td class="tr-r">—</td><td class="tr-r">$10,000</td></tr>
+                <tr><td>Card spend / month</td><td class="tr-r">—</td><td class="tr-r">$100,000</td></tr>
+                <tr><td>ATM / day (physical)</td><td class="tr-r">—</td><td class="tr-r">$1,000</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="card-box">
+            <h3><span class="h3-ic" data-icon="calc"></span> Top-up calculator</h3>
+            <p class="muted">See exactly what lands on your card.</p>
+            <label class="fld"><span>Top-up amount (USD)</span><input class="input" id="fee-calc" type="number" value="100" min="0"></label>
+            <div class="calc-out">
+              <div class="row-between"><span>Top-up fee (1%)</span><b id="fc-fee">$1.00</b></div>
+              <div class="row-between total"><span>Credited to card</span><b id="fc-net">$99.00</b></div>
+            </div>
+            <p class="muted xs">Fees shown are illustrative and roughly modeled on typical crypto-card platforms.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- REFERRAL -->
+      <div class="panel" id="panel-referral">
+        <div class="grid-2">
+          <div class="card-box ref-hero">
+            <h3><span class="h3-ic" data-icon="gift"></span> Give $5, get $5</h3>
+            <p class="muted">Friends sign up with your code and complete verification — you both earn a $5 card credit.</p>
+            <div class="ref-code-box">
+              <code id="ref-code">—</code>
+              <button class="btn ghost sm" data-action="copy" data-copy-id="ref-code">Copy code</button>
+            </div>
+            <div class="ref-link-box">
+              <span class="muted trunc" id="ref-link">—</span>
+              <button class="btn primary sm" data-action="copy" data-copy-id="ref-link">Copy link</button>
+            </div>
+          </div>
+          <div class="card-box">
+            <h3>Your stats</h3>
+            <div class="stat-row">
+              <div class="stat"><b id="ref-invited">0</b><span>Invited</span></div>
+              <div class="stat"><b id="ref-earned">$0</b><span>Earned</span></div>
+              <div class="stat"><b id="ref-pending">$0</b><span>Pending</span></div>
+            </div>
+            <h4 class="mt-s">Invited friends</h4>
+            <div id="ref-list"></div>
+          </div>
+          <div class="card-box span2">
+            <h3>How it works</h3>
+            <div class="steps-row compact">
+              <div class="step"><span class="step-n">1</span><p>Share your code or link with a friend.</p></div>
+              <div class="step"><span class="step-n">2</span><p>They sign up and complete verification.</p></div>
+              <div class="step"><span class="step-n">3</span><p>You each get $5 of card credit.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SETTINGS -->
+      <div class="panel" id="panel-settings">
+        <div class="settings-wrap">
+          <nav class="set-nav">
+            <button class="setnav-item active" data-action="settab" data-tab="profile"><span class="setnav-ic" data-icon="user"></span>Profile</button>
+            <button class="setnav-item" data-action="settab" data-tab="security"><span class="setnav-ic" data-icon="lock"></span>Security</button>
+            <button class="setnav-item" data-action="settab" data-tab="verify"><span class="setnav-ic" data-icon="id"></span>Verification</button>
+            <button class="setnav-item" data-action="settab" data-tab="prefs"><span class="setnav-ic" data-icon="sliders"></span>Preferences</button>
+            <button class="setnav-item" data-action="settab" data-tab="payment"><span class="setnav-ic" data-icon="card"></span>Payment</button>
+            <button class="setnav-item" data-action="settab" data-tab="addresses"><span class="setnav-ic" data-icon="book"></span>Address book</button>
+            <button class="setnav-item" data-action="settab" data-tab="business"><span class="setnav-ic" data-icon="calc"></span>Revenue model</button>
+            <button class="setnav-item" data-action="settab" data-tab="about"><span class="setnav-ic" data-icon="info"></span>About</button>
+          </nav>
+          <div class="set-content">
+
+            <div class="set-sec active" id="set-profile">
+              <div class="card-box">
+                <h3>Profile</h3>
+                <div class="profile-head">
+                  <span class="avatar lg" id="p-avatar">A</span>
+                  <button class="btn ghost sm" data-action="avatar-change">Change avatar</button>
+                </div>
+                <label class="fld"><span>Full name</span><input class="input" id="p-name"></label>
+                <label class="fld"><span>Email</span><input class="input" id="p-email" type="email"></label>
+                <label class="fld"><span>Phone</span><input class="input" id="p-phone" type="tel" placeholder="+1 555 010 2030"></label>
+                <button class="btn primary" data-action="save-profile">Save changes</button>
+              </div>
+            </div>
+
+            <div class="set-sec" id="set-security">
+              <div class="card-box">
+                <h3>Sign-in &amp; security</h3>
+                <div class="set-row"><div><b>Password</b><small>Last changed 30+ days ago</small></div><button class="btn ghost sm" data-action="change-pass">Change</button></div>
+                <div class="set-row"><div><b>Two-factor authentication</b><small>Authenticator app codes on sign-in &amp; withdrawals</small><span class="badge soft" id="tfa-badge">Off</span></div><label class="switch"><input type="checkbox" id="tg-2fa"><span></span></label></div>
+                <div class="set-row"><div><b>Passkey</b><small>Sign in with Face ID / fingerprint</small></div><button class="btn ghost sm" data-action="passkey-add">Add passkey</button></div>
+              </div>
+              <div class="card-box">
+                <h3>Devices &amp; sessions</h3>
+                <div id="sessions"></div>
+              </div>
+            </div>
+
+            <div class="set-sec" id="set-verify">
+              <div class="card-box" id="kyc-card"></div>
+              <div class="card-box">
+                <h3>Why verify?</h3>
+                <ul class="check-list">
+                  <li>Order virtual &amp; physical cards</li>
+                  <li>Withdrawal limit raised to $50,000 / day</li>
+                  <li>Card spend up to $10,000 / day</li>
+                  <li>Required by (pretend) regulations</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="set-sec" id="set-prefs">
+              <div class="card-box">
+                <h3>Appearance</h3>
+                <div class="seg" id="theme-seg">
+                  <button class="seg-btn" data-action="theme-set" data-theme="light"><span class="seg-ic" data-icon="sun"></span>Light</button>
+                  <button class="seg-btn" data-action="theme-set" data-theme="dark"><span class="seg-ic" data-icon="moon"></span>Dark</button>
+                </div>
+              </div>
+              <div class="card-box">
+                <h3>Localization</h3>
+                <label class="fld"><span>Display currency</span>
+                  <select class="input" id="sel-currency">
+                    <option>USD</option><option>EUR</option><option>GBP</option><option>INR</option><option>AED</option><option>SGD</option>
+                  </select>
+                </label>
+                <label class="fld"><span>Language</span>
+                  <select class="input" id="sel-language">
+                    <option value="en">English</option><option value="es">Español</option><option value="fr">Français</option><option value="hi">हिन्दी</option><option value="ar">العربية</option><option value="zh">中文</option>
+                  </select>
+                </label>
+              </div>
+              <div class="card-box">
+                <h3>Notifications</h3>
+                <div class="set-row"><div><b>Transaction alerts</b><small>Deposits, withdrawals and card payments</small></div><label class="switch"><input type="checkbox" id="tg-notif-tx"><span></span></label></div>
+                <div class="set-row"><div><b>Security alerts</b><small>New devices and setting changes</small></div><label class="switch"><input type="checkbox" id="tg-notif-sec"><span></span></label></div>
+                <div class="set-row"><div><b>Product updates</b><small>New features and announcements</small></div><label class="switch"><input type="checkbox" id="tg-notif-news"><span></span></label></div>
+              </div>
+            </div>
+
+            <div class="set-sec" id="set-payment">
+              <div class="card-box">
+                <h3>Card top-up</h3>
+                <label class="fld"><span>Default top-up asset</span>
+                  <select class="input" id="sel-topup-asset"><option>USDT</option><option>USDC</option></select>
+                </label>
+                <div class="set-row"><div><b>Auto top-up</b><small>Refill card to $100 when balance drops below $20</small></div><label class="switch"><input type="checkbox" id="tg-autotopup"><span></span></label></div>
+                <div class="set-row"><div><b>Large-spend alerts</b><small>Flag card payments over $500</small></div><label class="switch"><input type="checkbox" id="tg-alerts"><span></span></label></div>
+              </div>
+              <div class="card-box">
+                <h3>Statements</h3>
+                <div class="set-row"><div><b>Monthly statement</b><small>All account activity as CSV</small></div><button class="btn ghost sm" data-action="tx-csv">Download</button></div>
+              </div>
+            </div>
+
+            <div class="set-sec" id="set-addresses">
+              <div class="card-box">
+                <div class="row-between"><h3>Withdrawal address book</h3><button class="btn primary sm" data-action="addr-add"><span class="btn-ic" data-icon="plus"></span>Add</button></div>
+                <p class="muted">Saved addresses appear as quick picks when you withdraw.</p>
+                <div id="addr-list"></div>
+              </div>
+            </div>
+
+            <div class="set-sec" id="set-business">
+              <div class="card-box">
+                <div class="row-between"><h3>Revenue model — USDT → INR spread</h3><span class="admin-tag"><span class="badge brand">Admin only</span><button class="linklike" data-action="admin-exit">Exit</button></span></div>
+                <p class="muted">Model how a 0%-fee card earns on the conversion spread. Illustrative calculator — not a live rate feed. Hidden from normal users.</p>
+                <label class="fld"><span>Market rate — what 1 USDT actually costs you (₹)</span><input class="input" id="biz-market" type="number" value="86"></label>
+                <label class="fld"><span>Customer rate — ₹ you credit per 1 USDT</span><input class="input" id="biz-customer" type="number" value="83"></label>
+                <div class="calc-out" id="biz-out"></div>
+                <p class="muted xs mt-s">Your margin only exists when the customer rate is <b>below</b> your market cost. Credit more than it costs you and every conversion is a loss.</p>
+              </div>
+              <div class="card-box">
+                <h3>Revenue projection</h3>
+                <label class="fld"><span>Monthly conversion volume (USDT)</span><input class="input" id="biz-vol" type="number" value="100000"></label>
+                <div class="calc-out" id="biz-proj"></div>
+                <p class="muted xs mt-s">Spread alone. Interchange, top-up and ATM fees would add to this on a real program.</p>
+              </div>
+              <div class="card-box">
+                <h3>Where the money comes from</h3>
+                <table class="table">
+                  <tbody>
+                    <tr><td>Conversion / FX spread</td><td class="tr-r"><b>0.5–2%+</b> per convert</td></tr>
+                    <tr><td>Interchange (network → issuer)</td><td class="tr-r"><b>~0.2–2%</b> per swipe</td></tr>
+                    <tr><td>Top-up / loading fee</td><td class="tr-r"><b>0–3%</b></td></tr>
+                    <tr><td>ATM &amp; non-home FX fees</td><td class="tr-r"><b>1–3%</b></td></tr>
+                    <tr><td>Issuance fee</td><td class="tr-r"><b>one-time</b></td></tr>
+                    <tr><td>Yield on stablecoin float</td><td class="tr-r"><b>on reserves</b></td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="card-box danger-box">
+                <h3>Before you go live (read this)</h3>
+                <ul class="check-list warn-list">
+                  <li>You need a licensed card issuer / BIN sponsor — you can't issue cards from a website.</li>
+                  <li>Crypto→fiat makes you a VASP/MSB: registration, KYC/AML, sanctions screening, monitoring.</li>
+                  <li>PCI-DSS, custody, a liquidity provider and banking/settlement partners.</li>
+                  <li>India/INR: RBI does not treat crypto as payment; FEMA + PMLA + 1% TDS apply. Real players issue USD/EUR cards via offshore entities.</li>
+                  <li>"0% fee" while hiding a large spread is treated as deceptive in many markets — disclose the effective rate.</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="set-sec" id="set-about">
+              <div class="card-box">
+                <h3>About</h3>
+                <div class="set-row"><div><b>CrimsonPay</b><small>Preview build · runs in your browser</small></div></div>
+                <div class="set-row"><div><b>Export my data</b><small>Download everything as JSON</small></div><button class="btn ghost sm" data-action="export-data">Export</button></div>
+                <div class="set-row"><div><b>Terms &amp; privacy</b><small>Pretend legal documents</small></div><button class="btn ghost sm" data-action="legal">View</button></div>
+              </div>
+              <div class="card-box danger-box">
+                <h3>Danger zone</h3>
+                <div class="set-row"><div><b>Reset data</b><small>Restore balances, cards and history to defaults</small></div><button class="btn ghost sm" data-action="reset-demo">Reset</button></div>
+                <div class="set-row"><div><b>Close account</b><small>Erase this account entirely</small></div><button class="btn danger sm" data-action="close-account">Close</button></div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- HELP -->
+      <div class="panel" id="panel-help">
+        <div class="grid-2">
+          <div class="card-box">
+            <h3>Frequently asked</h3>
+            <details class="acc"><summary>My deposit isn't showing up</summary><p>Deposits credit after network confirmation — in this preview, ~5 seconds after you press "Simulate incoming deposit".</p></details>
+            <details class="acc"><summary>My card payment was declined</summary><p>Common causes: the card is frozen, the amount exceeds your daily limit, or the card balance is too low. Check Cards → Manage.</p></details>
+            <details class="acc"><summary>How do I raise my limits?</summary><p>Complete identity verification in Settings → Verification, then adjust per-card limits from the card's Limits button.</p></details>
+            <details class="acc"><summary>How do refunds work?</summary><p>Merchant refunds return to the card balance automatically, usually in 3–5 business days (instant in this preview).</p></details>
+            <details class="acc"><summary>Can I use the card abroad?</summary><p>Yes — non-USD payments convert at the live rate plus a 1.2% FX fee.</p></details>
+          </div>
+          <div class="card-box">
+            <h3>Contact support</h3>
+            <label class="fld"><span>Topic</span>
+              <select class="input" id="sup-topic"><option>Card issue</option><option>Deposit / withdrawal</option><option>Verification</option><option>Fees &amp; billing</option><option>Something else</option></select>
+            </label>
+            <label class="fld"><span>Message</span><textarea class="input" id="sup-msg" rows="5" placeholder="Tell us what happened…"></textarea></label>
+            <button class="btn primary" data-action="support-send">Send message</button>
+            <p class="muted xs mt-s">Average reply time: 2 minutes.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ADMIN -->
+      <div class="panel" id="panel-admin"><div id="admin-root"></div></div>
+
+    </div>
+  </div>
+
+  <nav class="bottomnav">
+    <button class="bn-item active" data-action="panel" data-panel="dashboard"><span data-icon="home"></span>Home</button>
+    <button class="bn-item" data-action="panel" data-panel="cards"><span data-icon="card"></span>Cards</button>
+    <button class="bn-item bn-fab" data-action="apply-card"><span data-icon="card"></span></button>
+    <button class="bn-item" data-action="panel" data-panel="txs"><span data-icon="activity"></span>Activity</button>
+    <button class="bn-item" data-action="panel" data-panel="settings"><span data-icon="settings"></span>Settings</button>
+  </nav>
+</section>
+
+<!-- NOTIFICATIONS DRAWER -->
+<div class="drawer-overlay hidden" id="drawer-overlay" data-action="notif-close"></div>
+<aside class="drawer hidden" id="drawer">
+  <div class="drawer-head">
+    <h3>Notifications</h3>
+    <div><button class="linklike" data-action="notif-readall">Mark all read</button> <button class="iconbtn" data-action="notif-close"><span data-icon="x"></span></button></div>
+  </div>
+  <div id="notif-list"></div>
+</aside>
+
+<!-- MODAL -->
+<div class="modal-overlay hidden" id="modal-root"><div class="modal card-box" id="modal-box"></div></div>
+
+<!-- TOASTS -->
+<div id="toasts"></div>
+
+<script src="app.js"></script>
+</body>
+</html>
