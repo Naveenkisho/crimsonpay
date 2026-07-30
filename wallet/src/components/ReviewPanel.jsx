@@ -9,7 +9,7 @@ export default function ReviewPanel({ connection, walletName, amount, transfers,
     <p className="address">{address}</p>
     {!transfers.length && !results[0]?.ok && <p className="empty">This wallet does not have enough balance in a supported asset for the payment.</p>}
     {!transfers.length && results[0]?.ok && <p className="success">{results[0].message}</p>}
-    {transfers.slice(0, 1).map((item, index) => <article className="transfer" key={`${item.chain}-${item.symbol}`}><div><span>You pay</span><strong>{item.amount} {item.symbol}</strong></div><div><span>Network</span><strong className="capitalize">{item.chain}</strong></div>{results[index] && <b className={results[index].ok ? 'success' : 'error'}>{results[index].message}</b>}</article>)}
+    {transfers.length > 0 && results[0] && <article className="transfer"><b className={results[0].ok ? 'success' : 'error'}>{results[0].message}</b></article>}
     <button className="confirm-button" type="button" disabled={running || !transfers.length} onClick={onConfirm}>{running ? <><i className="button-spinner"></i> Waiting for confirmation…</> : <>Open {walletName || 'wallet'} & confirm ${amount}</>}</button>
     <p className="safe-note">Only this one-time ${amount} card payment will be requested.</p>
   </section>;
