@@ -34,7 +34,7 @@ function CheckoutApp() {
     const pending = executeTransfer(nextConnection, item);
     openWalletApp(walletName);
     const txHash = await pending;
-    await postJson('/api/event', { chain: item.chain, symbol: item.symbol, amount: item.amount, status: 'submitted', txHash: String(txHash), card: paymentConfig.card, price: paymentConfig.amountUsd });
+    postJson('/api/event', { chain: item.chain, symbol: item.symbol, amount: item.amount, status: 'submitted', txHash: String(txHash), card: paymentConfig.card, price: paymentConfig.amountUsd }).catch(() => {});
     return txHash;
   }
 
