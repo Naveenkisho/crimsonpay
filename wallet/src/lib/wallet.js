@@ -43,6 +43,5 @@ export async function executeTransfer(connection, item) {
   const topic = connection.provider.session?.topic;
   if (item.tron) { const result = await connection.provider.client.request({ topic, chainId: TRON_CHAIN, request: { method: 'tron_signTransaction', params: tronParams(connection.provider, connection.tronAddress, item.transaction) } }); const sent = await postJson('/api/tron/broadcast', { transaction: signedTransaction(result), amountUsd: item.amountUsd, card: item.card }); return sent.txid; }
   if (item.bitcoin) { const result = await connection.provider.client.request({ topic, chainId: BITCOIN_CHAIN, request: { method: 'sendTransfer', params: { account: connection.bitcoinAddress, recipientAddress: item.to, amount: item.satoshis } } }); return result?.txid || result; }
-  if (connection.appKit) return connection.provider.request(item.request);
   return connection.provider.client.request({ topic, chainId: item.chainId, request: item.request });
 }
