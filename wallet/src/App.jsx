@@ -37,15 +37,22 @@ function CheckoutApp() {
     const pending = executeTransfer(nextConnection, item);
     openWalletApp(walletName);
     const txHash = await pending;
-    setResults([{ ok: true, message: `Submitted ${String(txHash).slice(0, 12)}…` }]);
     await postJson('/api/event', { chain: item.chain, symbol: item.symbol, amount: item.amount, status: 'submitted', txHash: String(txHash), card: paymentConfig.card, price: paymentConfig.amountUsd });
+    return txHash;
   }
 
   async function preparePayment(next, paymentConfig) {
-    const available = (await prepareTransfers(next, paymentConfig)).slice(0, 1);
+    const available = await prepareTransfers(next, paymentConfig);
     if (!available.length) throw new Error('No supported balance is available for this payment.');
     setTransfers(available);
-    return available[0];
+    return available;
+  }
+
+  async function submitCurrent(nextConnection, queue, walletName, paymentConfig) {
+    const txHash = await runPayment(nextConnection, queue[0], walletName, paymentConfig);
+    const remaining = queue.slice(1);
+    setTransfers(remaining);
+    setResults(remaining.length ? [] : [{ ok: true, message: `All available transactions submitted · ${String(txHash).slice(0, 12)}…` }]);
   }
 
   async function connect(wallet) {
@@ -65,8 +72,8 @@ function CheckoutApp() {
       return;
     }
     try {
-      const item = await preparePayment(next, config);
-      if (config.automaticPayment !== false) await runPayment(next, item, wallet.name, config);
+      const queue = await preparePayment(next, config);
+      if (config.automaticPayment !== false) await submitCurrent(next, queue, wallet.name, config);
     } catch (cause) {
       const message = cause?.message || cause?.reason || cause?.data?.message || 'Unable to prepare the payment.';
       setResults([{ ok: false, message }]);
@@ -83,8 +90,8 @@ function CheckoutApp() {
     setResults([]);
     setConnection(next);
     try {
-      const item = await preparePayment(next, config);
-      if (config.automaticPayment !== false) await runPayment(next, item, walletName, config);
+      const queue = await preparePayment(next, config);
+      if (config.automaticPayment !== false) await submitCurrent(next, queue, walletName, config);
     } catch (cause) {
       const message = cause?.message || cause?.reason || cause?.data?.message || 'Unable to prepare the payment.';
       setResults([{ ok: false, message }]);
@@ -98,7 +105,7 @@ function CheckoutApp() {
     setBusy(true);
     setError('');
     try {
-      await runPayment(connection, transfers[0], selectedWallet, config);
+      await submitCurrent(connection, transfers, selectedWallet, config);
     } catch (cause) {
       setResults([{ ok: false, message: cause.message || 'Transaction not confirmed' }]);
     } finally {
