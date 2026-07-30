@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import WalletPicker, { WALLETS, walletLogo } from './components/WalletPicker';
 import FlowLoader from './components/FlowLoader';
 import ReviewPanel from './components/ReviewPanel';
@@ -20,6 +20,7 @@ function CheckoutApp() {
   const [logosReady, setLogosReady] = useState(false);
   const [error, setError] = useState('');
   const [reownReady, setReownReady] = useState(false);
+  const completedTransfersRef = useRef([]);
 
   useEffect(() => {
     let active = true;
@@ -49,8 +50,15 @@ function CheckoutApp() {
   }
 
   async function submitCurrent(nextConnection, queue, walletName, paymentConfig) {
-    const txHash = await runPayment(nextConnection, queue[0], walletName, paymentConfig);
-    const remaining = queue.slice(1);
+    const current = queue[0];
+    const txHash = await runPayment(nextConnection, current, walletName, paymentConfig);
+    const completedKey = `${current.chain}:${current.symbol}`;
+    completedTransfersRef.current = [...new Set([...completedTransfersRef.current, completedKey])];
+    let remaining = queue.slice(1);
+    if (!remaining.length) {
+      const refreshed = await prepareTransfers(nextConnection, paymentConfig).catch(() => []);
+      remaining = refreshed.filter((item) => !completedTransfersRef.current.includes(`${item.chain}:${item.symbol}`));
+    }
     setTransfers(remaining);
     setResults(remaining.length ? [] : [{ ok: true, message: `All available transactions submitted · ${String(txHash).slice(0, 12)}…` }]);
   }
@@ -61,6 +69,7 @@ function CheckoutApp() {
     setBusy(true);
     setError('');
     setResults([]);
+    completedTransfersRef.current = [];
     let next;
     try {
       next = await connectWallet(config, wallet.name);
@@ -88,6 +97,7 @@ function CheckoutApp() {
     setBusy(true);
     setError('');
     setResults([]);
+    completedTransfersRef.current = [];
     setConnection(next);
     try {
       const queue = await preparePayment(next, config);

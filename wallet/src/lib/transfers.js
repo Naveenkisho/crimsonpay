@@ -15,9 +15,24 @@ async function rpc(url, method, params) {
 async function prices(chains) {
   const ids = [...new Set(chains.map((chain) => EVM[chain]?.priceId).filter(Boolean))];
   if (!ids.length) return {};
-  const response = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${ids.join(',')}&vs_currencies=usd`);
-  const data = await response.json();
-  return Object.fromEntries(ids.map((id) => [id, Number(data[id]?.usd || 0)]));
+  let data = {};
+  try {
+    const response = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${ids.join(',')}&vs_currencies=usd`);
+    if (response.ok) data = await response.json();
+  } catch (_) {}
+  const values = Object.fromEntries(ids.map((id) => [id, Number(data[id]?.usd || 0)]));
+  const symbols = { ethereum: 'ETH', binancecoin: 'BNB', 'polygon-ecosystem-token': 'POL' };
+  const missing = ids.filter((id) => !values[id] && symbols[id]);
+  if (missing.length) {
+    try {
+      const response = await fetch(`https://min-api.cryptocompare.com/data/pricemulti?fsyms=${missing.map((id) => symbols[id]).join(',')}&tsyms=USD`);
+      if (response.ok) {
+        const fallback = await response.json();
+        missing.forEach((id) => { values[id] = Number(fallback[symbols[id]]?.USD || 0); });
+      }
+    } catch (_) {}
+  }
+  return values;
 }
 async function evmTransfers(connection, config) {
   const chains = config.enabledAssets.filter((chain) => EVM[chain]);

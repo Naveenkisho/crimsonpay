@@ -19,6 +19,7 @@ export function initializeReown(config) {
       icons: [`${window.location.origin}/favicon.ico`]
     },
     features: { analytics: true, email: false, socials: [], connectMethodsOrder: ['wallet'] },
+    themeVariables: { '--w3m-z-index': 9999 },
     themeMode: 'dark'
   });
   initialized = true;
