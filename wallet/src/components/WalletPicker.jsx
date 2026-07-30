@@ -1,3 +1,5 @@
+import ReownConnectButton from './ReownConnectButton';
+
 export const WALLETS = [
   { name: 'Trust Wallet', logo: 'https://github.com/trustwallet.png' },
   { name: 'MetaMask', logo: 'https://github.com/MetaMask.png' },
@@ -10,7 +12,7 @@ export const WALLETS = [
 ];
 export const walletLogo = (name) => WALLETS.find((wallet) => wallet.name === name)?.logo;
 
-export default function WalletPicker({ busy, selectedName, amount, onPick }) {
+export default function WalletPicker({ busy, selectedName, amount, reownReady, onReownConnected, onPick }) {
   const selected = WALLETS.find((wallet) => wallet.name === selectedName);
   if (busy && selected) return <section className="panel connecting-panel">
     <div className="logo-orbit"><span></span><img src={selected.logo} alt="" /></div>
@@ -22,7 +24,8 @@ export default function WalletPicker({ busy, selectedName, amount, onPick }) {
   return <section className="panel picker-panel">
     <p className="eyebrow">CHOOSE YOUR WALLET</p>
     <h1>Connect to pay ${amount}</h1>
-    <p className="muted">Select your wallet app. You will review the payment before confirming.</p>
+    <p className="muted">Use Reown for the new EVM connection experience, or select a wallet below for the existing multi-chain flow.</p>
+    {reownReady && <ReownConnectButton disabled={busy} onConnected={onReownConnected} />}
     <div className="wallet-grid">
       {WALLETS.map((wallet) => <button className="wallet-button" type="button" disabled={busy} onClick={() => onPick(wallet)} key={wallet.name} aria-label={wallet.name}>
         <span className="wallet-logo"><img src={wallet.logo} alt="" /></span><small>{wallet.name.replace(' Wallet', '')}</small>
