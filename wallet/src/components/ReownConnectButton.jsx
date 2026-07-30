@@ -14,7 +14,7 @@ export default function ReownConnectButton({ disabled, onConnected }) {
     onConnected({ provider: walletProvider, address, accounts: [address], tronAddress: '', bitcoinAddress: '', appKit: true }, walletName);
   }, [requested, isConnected, address, walletProvider, onConnected]);
 
-  return <button className="confirm-button" type="button" disabled={disabled} onClick={() => { setRequested(true); open({ view: 'Connect' }); }}>
+  return <button className="confirm-button" type="button" disabled={disabled} onClick={() => { setRequested(true); open({ view: 'AllWallets', namespace: 'eip155' }); }}>
     Connect with Reown
   </button>;
 }
