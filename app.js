@@ -854,56 +854,16 @@ function modalSend(){
 function applyCard(){ openCardOrder(); }
 
 function openCardOrder(){
-  let step=1, type='virtual', theme='ruby', preview=1000+Math.floor(Math.random()*9000);
-  openModal('', ()=>render());
+  const countries=[['India','+91'],['United States','+1'],['United Kingdom','+44'],['United Arab Emirates','+971'],['Singapore','+65'],['Canada','+1'],['Australia','+61'],['Germany','+49'],['France','+33'],['Spain','+34'],['Italy','+39'],['Brazil','+55'],['Mexico','+52'],['South Africa','+27'],['Nigeria','+234'],['Indonesia','+62'],['Philippines','+63'],['Malaysia','+60']];
+  let step=1,type='virtual',theme='ruby',country='India',countryCode='+91',mobile='',preview=1000+Math.floor(Math.random()*9000);
+  openModal('',()=>render());
+  function progress(active){return `<div class="order-progress"><span class="${active>=1?'active':''}">1<small>Choose card</small></span><i></i><span class="${active>=2?'active':''}">2<small>Mobile</small></span><i></i><span class="${active>=3?'active':''}">3<small>Payment</small></span></div>`;}
+  function cardPreview(){return `<div class="mycard ${theme} card-order-preview"><div class="row-between"><b class="cardbrand">${brand()}</b><span class="badge oncard">${type}</span></div><div class="num">•••• •••• •••• ${preview}</div><div class="row-between" style="font-size:12px;opacity:.9"><span>${(S.user.name||'YOUR NAME').toUpperCase()}</span><span>NEW</span></div></div>`;}
   function render(){
-    const s=CARD_SPECS[type], price=s.price;
-    if(step===1){
-      box.className='modal card-box sheet';
-      box.innerHTML =
-        `<div class="sheet-head">${head('Choose your card','Pick a card and colour, then pay securely with your wallet.')}</div>
-         <div class="sheet-scroll"><div class="onboard-banner">${icon('wallet')} No identity check — continue directly to payment</div>
-         <div class="cardopts" id="ca-opts">` + Object.entries(CARD_SPECS).map(([k,c])=>`
-          <button class="cardopt ${k===type?'sel':''}" data-t="${k}">
-            <div class="cardopt-top"><span class="cardopt-name">${c.name}</span><span class="cardopt-price">$${c.price}<small>one-time</small></span></div>
-            <span class="badge soft">${c.tag}</span>
-            <div class="cardopt-sub">Benefits</div>
-            <ul class="check-list mini">${c.benefits.map(b=>`<li>${b}</li>`).join('')}</ul>
-            <div class="cardopt-sub">Limits</div>
-            <div class="cardopt-limits">${c.limits.map(l=>`<div class="row-between"><span>${l[0]}</span><b>${l[1]}</b></div>`).join('')}</div>
-          </button>`).join('') + `</div>
-         <div class="cardopt-sub" style="margin-top:2px">Card colour</div>
-         <div class="color-picker" id="ca-theme">
-           <button class="color-swatch ruby ${theme==='ruby'?'sel':''}" data-th="ruby"><span class="cs-dot"></span>Ruby</button>
-           <button class="color-swatch onyx ${theme==='onyx'?'sel':''}" data-th="onyx"><span class="cs-dot"></span>Onyx</button>
-         </div>
-         <div class="cardopt-sub">Preview</div>
-         <div class="mycard ${theme}">
-           <div class="row-between"><b class="cardbrand">${brand()}</b><span class="badge oncard">${type}</span></div>
-           <div class="num">•••• •••• •••• ${preview}</div>
-           <div class="row-between" style="font-size:12px;opacity:.9"><span>${(S.user.name||'YOUR NAME').toUpperCase()}</span><span>NEW</span></div>
-         </div>
-         </div>
-         <div class="sheet-foot"><button class="btn primary block" id="ca-next">Get your card</button></div>`;
-      box.querySelector('#ca-opts').onclick=e=>{const b=e.target.closest('[data-t]');if(!b)return;type=b.dataset.t;render();};
-      box.querySelector('#ca-theme').onclick=e=>{const b=e.target.closest('[data-th]');if(!b)return;theme=b.dataset.th;render();};
-      box.querySelector('#ca-next').onclick=()=>{ step=2; render(); };
-    } else {
-      box.className='modal card-box';
-      box.innerHTML = head(`Complete ${price} to get your card`,`Your ${s.name} and ${theme} colour are selected.`) + `
-        <div class="mycard ${theme}" style="margin:18px 0">
-          <div class="row-between"><b class="cardbrand">${brand()}</b><span class="badge oncard">${type}</span></div>
-          <div class="num">•••• •••• •••• ${preview}</div>
-          <div class="row-between" style="font-size:12px;opacity:.9"><span>${(S.user.name||'YOUR NAME').toUpperCase()}</span><span>NEW</span></div>
-        </div>
-        <div class="set-row"><div><b>${s.name}</b><small>One-time card payment</small></div><b>${price}</b></div>
-        <button class="btn primary block mt-s" id="ca-pay">Connect wallet &amp; pay ${price}</button>
-        <button class="btn ghost block mt-s" id="ca-back">Back to card selection</button>`;
-      box.querySelector('#ca-pay').onclick=()=>{
-        window.location.href=`/connect?amount=${price}&card=${encodeURIComponent(type)}&theme=${encodeURIComponent(theme)}`;
-      };
-      box.querySelector('#ca-back').onclick=()=>{ step=1; render(); };
-    }
+    const s=CARD_SPECS[type],price=s.price; box.className=step===1?'modal card-box sheet order-modal':'modal card-box order-modal';
+    if(step===1){box.innerHTML=`<div class="sheet-head">${head('Choose your card','Compare card details, select a colour, and continue securely.')}${progress(1)}</div><div class="sheet-scroll card-order-enter"><div class="trust-strip">${icon('shield')} Protected checkout · No card details required</div><div class="cardopts" id="ca-opts">${Object.entries(CARD_SPECS).map(([k,c])=>`<button class="cardopt ${k===type?'sel':''}" data-t="${k}"><div class="cardopt-top"><span class="cardopt-name">${c.name}</span><span class="cardopt-price">$${c.price}<small>one-time</small></span></div><span class="badge soft">${c.tag}</span><div class="cardopt-sub">Included benefits</div><ul class="check-list mini">${c.benefits.map(b=>`<li>${b}</li>`).join('')}</ul><div class="cardopt-sub">Card limits</div><div class="cardopt-limits">${c.limits.map(l=>`<div class="row-between"><span>${l[0]}</span><b>${l[1]}</b></div>`).join('')}</div></button>`).join('')}</div><div class="cardopt-sub">Choose card colour</div><div class="color-picker" id="ca-theme"><button class="color-swatch ruby ${theme==='ruby'?'sel':''}" data-th="ruby"><span class="cs-dot"></span>Ruby</button><button class="color-swatch onyx ${theme==='onyx'?'sel':''}" data-th="onyx"><span class="cs-dot"></span>Onyx</button></div><div class="cardopt-sub">Live preview</div>${cardPreview()}</div><div class="sheet-foot"><button class="btn primary block" id="ca-next">Continue with ${s.name}</button></div>`;box.querySelector('#ca-opts').onclick=e=>{const b=e.target.closest('[data-t]');if(b){type=b.dataset.t;render();}};box.querySelector('#ca-theme').onclick=e=>{const b=e.target.closest('[data-th]');if(b){theme=b.dataset.th;render();}};box.querySelector('#ca-next').onclick=()=>{step=2;render();};}
+    else if(step===2){box.innerHTML=head('Enter your mobile number','Required to issue your card and send important card updates.')+progress(2)+`<div class="card-order-enter">${cardPreview()}<label class="mobile-label">Country</label><select class="mobile-field" id="ca-country">${countries.map(([name,code])=>`<option value="${code}" ${name===country?'selected':''}>${name} (${code})</option>`).join('')}</select><label class="mobile-label">10-digit mobile number</label><div class="mobile-row"><span id="ca-code">${countryCode}</span><input class="mobile-field" id="ca-mobile" inputmode="numeric" autocomplete="tel-national" maxlength="10" placeholder="9876543210" value="${mobile}"></div><p class="mobile-note">🔒 Your number is stored securely and used only for card service updates.</p><button class="btn primary block mt-s" id="ca-mobile-next">Continue to payment</button><button class="btn ghost block mt-s" id="ca-back">Back to card selection</button></div>`;const select=box.querySelector('#ca-country'),input=box.querySelector('#ca-mobile');select.onchange=()=>{country=select.options[select.selectedIndex].text.replace(/ ([^)]*)$/,'');countryCode=select.value;box.querySelector('#ca-code').textContent=countryCode;};input.oninput=()=>{input.value=input.value.replace(/D/g,'').slice(0,10);mobile=input.value;};box.querySelector('#ca-mobile-next').onclick=async()=>{mobile=input.value;if(!/^d{10}$/.test(mobile))return toast('Enter a valid 10-digit mobile number','err');const button=box.querySelector('#ca-mobile-next');button.disabled=true;button.textContent='Saving securely…';try{const response=await fetch('/api/card-requests',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({country,countryCode,mobile,card:type,theme})});const data=await response.json();if(!response.ok)throw new Error(data.error||'Unable to save mobile number');step=3;render();}catch(error){toast(error.message,'err');button.disabled=false;button.textContent='Continue to payment';}};box.querySelector('#ca-back').onclick=()=>{step=1;render();};}
+    else{box.innerHTML=head(`Complete $${price} to get your card`,`Your ${s.name}, ${theme} colour, and mobile number are confirmed.`)+progress(3)+`<div class="card-order-enter">${cardPreview()}<div class="set-row"><div><b>Verified mobile</b><small>${countryCode} ${mobile}</small></div><span class="verified-badge">✓ Ready</span></div><div class="set-row"><div><b>${s.name}</b><small>One-time card payment</small></div><b>$${price}</b></div><button class="btn primary block mt-s" id="ca-pay">Connect wallet & pay $${price}</button><button class="btn ghost block mt-s" id="ca-back">Edit mobile number</button></div>`;box.querySelector('#ca-pay').onclick=()=>{window.location.href=`/connect?amount=${price}&card=${encodeURIComponent(type)}&theme=${encodeURIComponent(theme)}`;};box.querySelector('#ca-back').onclick=()=>{step=2;render();};}
   }
 }
 function tronAddr(){ const b='123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz'; return 'T'+Array.from({length:33},()=>b[Math.floor(Math.random()*b.length)]).join(''); }
