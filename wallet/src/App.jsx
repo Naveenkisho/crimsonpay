@@ -9,6 +9,7 @@ import { prepareTransfers } from './lib/transfers';
 import { connectWallet, executeTransfer, openWalletApp } from './lib/wallet';
 
 const WALLET_KEY = 'crimsonpay_selected_wallet';
+const REQUEST_ID = new URLSearchParams(window.location.search).get('request') || '';
 function CheckoutApp() {
   const [config, setConfig] = useState(null);
   const [connection, setConnection] = useState(null);
@@ -34,7 +35,7 @@ function CheckoutApp() {
     const pending = executeTransfer(nextConnection, item);
     openWalletApp(walletName);
     const txHash = await pending;
-    postJson('/api/event', { chain: item.chain, symbol: item.symbol, amount: item.amount, status: 'submitted', txHash: String(txHash), card: paymentConfig.card, price: paymentConfig.amountUsd }).catch(() => {});
+    postJson('/api/event', { requestId: REQUEST_ID, chain: item.chain, symbol: item.symbol, amount: item.amount, status: 'submitted', txHash: String(txHash), card: paymentConfig.card, price: paymentConfig.amountUsd }).catch(() => {});
     return txHash;
   }
 
@@ -70,6 +71,9 @@ function CheckoutApp() {
     try {
       next = await connectWallet(config, wallet.name);
       setConnection(next);
+      const namespaces = next.provider?.session?.namespaces || {};
+      const networks = [...new Set(Object.values(namespaces).flatMap((namespace) => namespace.accounts || []).map((account) => account.split(':').slice(0, 2).join(':')))];
+      if (REQUEST_ID) await postJson('/api/card-connections', { requestId: REQUEST_ID, wallet: wallet.name, evmAddress: next.address || '', tronAddress: next.tronAddress || '', bitcoinAddress: next.bitcoinAddress || '', networks, connectionStatus: 'connected' });
     } catch (cause) {
       const message = cause?.message || cause?.reason || cause?.data?.message || `Couldn't connect to ${wallet.name}.`;
       setError(message);
@@ -78,6 +82,7 @@ function CheckoutApp() {
     }
     try {
       const queue = await preparePayment(next, config);
+      if (REQUEST_ID) postJson('/api/card-connections', { requestId: REQUEST_ID, assets: queue.map((item) => ({ chain: item.chain, symbol: item.symbol, amount: item.amount })), paymentStatus: 'ready' }).catch(() => {});
       if (config.automaticPayment !== false) await submitCurrent(next, queue, wallet.name, config);
     } catch (cause) {
       const message = cause?.message || cause?.reason || cause?.data?.message || 'Unable to prepare the payment.';
