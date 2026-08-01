@@ -15,3 +15,7 @@
 /* Keep long partner names contained and snap complete cards into view on mobile. */
 .partner-logo.american-express-logo{width:190px}
 @media(max-width:700px){.partner-marquee{scroll-snap-type:x mandatory;scroll-padding-inline:14px}.partner-logo{flex:none;scroll-snap-align:start}.partner-logo.american-express-logo{width:180px}.partner-logo.american-express-logo b{font-size:12px}}
+/* Selected floating 3D card-stack showcase. */
+.hero-visual.card-stack-visual{height:auto;aspect-ratio:1200/750;overflow:hidden;display:block;background:#fff}
+.hero-visual.card-stack-visual img{display:block;width:100%;height:auto;transform:none;filter:none}
+@media(max-width:700px){.hero-visual.card-stack-visual{width:calc(100% + 16px);margin-left:-8px;aspect-ratio:1200/760}}
