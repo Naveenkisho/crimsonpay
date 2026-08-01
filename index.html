@@ -3,9 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>CrimsonPay — Spend crypto like cash</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23e0243a'/%3E%3Cpath d='M50 22 78 50 50 78 22 50Z' fill='white'/%3E%3C/svg%3E">
+<title>CrimsonPay — Your crypto, ready to spend</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%230500ff'/%3E%3Cpath d='M50 22 78 50 50 78 22 50Z' fill='white'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="trust-theme.css">
 </head>
 <body data-view="landing">
 
@@ -13,173 +14,64 @@
 <section class="view" id="view-landing">
   <header class="lnav">
     <div class="lnav-inner">
-      <div class="logo"><span class="logo-mark" data-icon="diamond"></span><span class="logo-text">CrimsonPay</span></div>
-      <nav class="lnav-links">
-        <a href="#l-features">Features</a>
-        <a href="#l-cards">Cards</a>
-        <a href="#l-fees">Fees</a>
-        <a href="#l-security">Security</a>
-        <a href="#l-faq">FAQ</a>
-      </nav>
-      <div class="lnav-actions">
-        <div class="mini-select"><span data-icon="convert" class="ms-ic"></span><select id="ln-currency" title="Currency"><option>USD</option><option>EUR</option><option>GBP</option><option>INR</option><option>AED</option><option>SGD</option></select></div>
-        <button class="btn ghost" data-action="goto-auth" data-mode="signin">Sign in</button>
-        <button class="btn primary" data-action="goto-auth" data-mode="signup">Get started</button>
-      </div>
+      <a class="logo" href="#top" aria-label="CrimsonPay home"><span class="logo-mark" data-icon="diamond"></span><span class="logo-text">CRIMSONPAY</span></a>
+      <nav class="lnav-links"><a href="#l-features">Benefits</a><a href="#l-how">How it works</a><a href="#l-cards">Cards</a><a href="#l-security">Security</a></nav>
+      <div class="lnav-actions"><div class="mini-select"><span>🇬🇧</span><select id="ln-currency" title="Currency"><option>USD</option><option>EUR</option><option>GBP</option><option>INR</option><option>AED</option><option>SGD</option></select></div><button class="btn primary" data-action="goto-auth" data-mode="signup">Get Started <span>→</span></button></div>
     </div>
   </header>
 
-  <main>
-    <!-- HERO -->
-    <div class="hero">
+  <main id="top">
+    <section class="hero">
       <div class="hero-inner">
         <div class="hero-copy">
-          <span class="pill"><span class="pill-ic" data-icon="card"></span> Spend crypto anywhere cards are accepted</span>
-          <h1>Spend crypto<br>like <em>cash.</em></h1>
-          <p class="hero-sub">Deposit BTC, ETH, USDT and more — then pay anywhere with a virtual or physical CrimsonPay card. Instant issuance, transparent fees, freeze anytime.</p>
-          <div class="hero-cta">
-            <button class="btn primary lg" data-action="goto-auth" data-mode="signup">Create free account</button>
-            <button class="btn ghost lg" data-action="goto-auth" data-mode="signin">Sign in</button>
-          </div>
-          <div class="hero-stats">
-            <div><b>150M+</b><span>merchants*</span></div>
-            <div><b>5+</b><span>cryptocurrencies</span></div>
-            <div><b>$0</b><span>monthly fee</span></div>
-            <div><b>1%</b><span>top-up fee</span></div>
-          </div>
+          <span class="pill">✧ Live in 150+ Countries</span>
+          <h1>Use Crypto<br>Anywhere.<br>No Limits.</h1>
+          <p class="hero-sub">Your crypto wallet, now in your pocket at checkout. Pay directly from your holdings — no top-ups, no identity checks required.</p>
+          <div class="hero-cta"><button class="btn primary lg" data-action="goto-auth" data-mode="signup">Get My Card <span>→</span></button><a class="btn ghost lg" href="#l-how">See How It Works</a></div>
+          <div class="hero-stats"><span>✓ KYC-Free</span><span>✓ Approved Instantly</span><span>✓ No Annual Charges</span></div>
         </div>
-        <div class="hero-visual">
-          <div class="cardart onyx tilt-l">
-            <div class="ca-top"><span class="ca-brand"><span class="ca-diamond" data-icon="diamond"></span>CrimsonPay</span><span class="ca-chip"></span></div>
-            <div class="ca-num">5301 •••• •••• 7442</div>
-            <div class="ca-bot"><span>ALEX MORGAN</span><span>11/29</span></div>          </div>
-          <div class="cardart ruby tilt-r">
-            <div class="ca-top"><span class="ca-brand"><span class="ca-diamond" data-icon="diamond"></span>CrimsonPay</span><span class="ca-chip"></span></div>
-            <div class="ca-num">4291 •••• •••• 8347</div>
-            <div class="ca-bot"><span>ALEX MORGAN</span><span>09/29</span></div>          </div>
+        <div class="hero-visual" aria-label="CrimsonPay crypto card">
+          <div class="orbit orbit-a"></div><div class="orbit orbit-b"></div>
+          <div class="cardart onyx tilt-l"><div class="ca-top"><span class="ca-brand"><span class="ca-diamond" data-icon="diamond"></span>CrimsonPay</span><span class="ca-chip"></span></div><div class="ca-num">•••• •••• •••• 7442</div><div class="ca-bot"><span>YOUR CRYPTO</span><span>READY</span></div></div>
+          <div class="phone-card"><span>Available Balance</span><b>$1,228.20</b><small>BTC · ETH · USDT</small></div>
         </div>
       </div>
-    </div>
+    </section>
 
-    <!-- FEATURES -->
-    <div class="lsection" id="l-features">
-      <h2>Everything a crypto card should do</h2>
-      <p class="lsection-sub">Built to mirror a real card platform — every button below actually works once you're inside.</p>
+    <section class="payment-strip" aria-label="Payment compatibility"><b>Pay everywhere you already shop</b><div><span>Pay</span><span class="gpay">G Pay</span><span>VISA</span><span>Mastercard</span></div><p>Compatible with all major wallets</p></section>
+
+    <section class="lsection intro-section" id="l-features">
+      <span class="section-kicker">Why Choose Us</span><h2>Built different.<br>Works better.</h2><p class="lsection-sub">Designed for people who live on-chain. Every detail is crafted to remove friction from your daily spending.</p>
       <div class="feat-grid">
-        <div class="feat"><span class="feat-ic" data-icon="bolt"></span><h3>Instant virtual card</h3><p>Apply in the app and get a usable card number in seconds. Online payments, subscriptions, mobile wallets.</p></div>
-        <div class="feat"><span class="feat-ic" data-icon="card"></span><h3>Physical card</h3><p>A metal card shipped worldwide. Tap to pay in stores and withdraw cash at ATMs.</p></div>
-        <div class="feat"><span class="feat-ic" data-icon="phone"></span><h3>Mobile wallets</h3><p>Add your card to Apple Pay and Google Pay and pay with your phone or watch.</p></div>
-        <div class="feat"><span class="feat-ic" data-icon="coins"></span><h3>Multi-crypto balance</h3><p>Hold BTC, ETH, SOL, USDT and USDC. Deposit on TRC20, ERC20, BEP20 and more.</p></div>
-        <div class="feat"><span class="feat-ic" data-icon="fees"></span><h3>Transparent fees</h3><p>$0 monthly, 1% top-up, 1.2% FX. Every fee published on one page — no surprises.</p></div>
-        <div class="feat"><span class="feat-ic" data-icon="shield"></span><h3>Bank-grade controls</h3><p>Two-factor auth, spending limits, one-tap card freeze and a full device history.</p></div>
+        <article class="feat"><span class="feat-ic" data-icon="wallet"></span><h3>Wallet-Native Payments</h3><p>Link your wallet once and pay from your holdings directly. No intermediaries, no custody transfers.</p></article>
+        <article class="feat"><span class="feat-ic" data-icon="globe"></span><h3>Worldwide Coverage</h3><p>Supported at over 150 million merchants across 150+ countries, online and in store.</p></article>
+        <article class="feat"><span class="feat-ic" data-icon="bolt"></span><h3>Instant Approval</h3><p>Choose your card and activate it in minutes. No paperwork, waiting lists, or hidden steps.</p></article>
+        <article class="feat"><span class="feat-ic" data-icon="shield"></span><h3>Built for Security</h3><p>You stay in control. Freeze your card, set limits, and monitor every payment from one place.</p></article>
       </div>
-    </div>
+    </section>
 
-    <!-- HOW IT WORKS -->
-    <div class="lsection alt" id="l-how">
-      <h2>Up and running in 3 steps</h2>
-      <div class="steps-row">
-        <div class="step"><span class="step-n">1</span><h3>Create your account</h3><p>Sign up with your email and choose your virtual or physical card.</p></div>
-        <div class="step"><span class="step-n">2</span><h3>Deposit crypto</h3><p>Send USDT, BTC or ETH to your personal deposit address. Credited automatically.</p></div>
-        <div class="step"><span class="step-n">3</span><h3>Pick a card &amp; spend</h3><p>Choose virtual or physical, top it up, and pay anywhere cards are accepted.</p></div>
-      </div>
-    </div>
+    <section class="lsection how-section" id="l-how">
+      <span class="section-kicker">Simple by design</span><h2>From wallet to checkout<br>in three steps.</h2>
+      <div class="steps-new"><article><b>01</b><span class="feat-ic" data-icon="wallet"></span><h3>Connect your wallet</h3><p>Choose your preferred wallet and connect securely.</p></article><article><b>02</b><span class="feat-ic" data-icon="card"></span><h3>Choose your card</h3><p>Select the card and finish that matches your lifestyle.</p></article><article><b>03</b><span class="feat-ic" data-icon="bolt"></span><h3>Start spending</h3><p>Activate instantly and use crypto anywhere cards are accepted.</p></article></div>
+    </section>
 
-    <!-- CARDS / PRICING -->
-    <div class="lsection" id="l-cards">
-      <h2>Choose your card</h2>
-      <p class="lsection-sub">One-time issuance fee. No monthly fee, ever.</p>
-      <div class="price-row">
-        <div class="price-card">
-          <div class="cardart ruby mini">
-            <div class="ca-top"><span class="ca-brand"><span class="ca-diamond" data-icon="diamond"></span>CrimsonPay</span><span class="ca-chip"></span></div>
-            <div class="ca-num">4291 •••• •••• 8347</div>
-            <div class="ca-bot"><span>VIRTUAL</span><span>09/29</span></div>
-          </div>
-          <h3>Virtual Card</h3>
-          <div class="price"><b>$10</b><span> one-time</span></div>
-          <ul class="check-list">
-            <li>Issued after secure wallet payment</li>
-            <li>Online payments &amp; subscriptions</li>
-            <li>Apple Pay / Google Pay</li>
-            <li>Freeze &amp; limits anytime</li>
-          </ul>
-          <button class="btn primary block" data-action="goto-auth" data-mode="signup">Get virtual card</button>
-        </div>
-        <div class="price-card featured">
-          <span class="ribbon">Most popular</span>
-          <div class="cardart onyx mini">
-            <div class="ca-top"><span class="ca-brand"><span class="ca-diamond" data-icon="diamond"></span>CrimsonPay</span><span class="ca-chip"></span></div>
-            <div class="ca-num">5301 •••• •••• 7442</div>
-            <div class="ca-bot"><span>PHYSICAL</span><span>11/29</span></div>
-          </div>
-          <h3>Physical Card</h3>
-          <div class="price"><b>$100</b><span> incl. worldwide shipping</span></div>
-          <ul class="check-list">
-            <li>Everything in Virtual</li>
-            <li>Tap to pay in stores</li>
-            <li>ATM cash withdrawals</li>
-            <li>Premium metal design</li>
-          </ul>
-          <button class="btn primary block" data-action="goto-auth" data-mode="signup">Get physical card</button>
-        </div>
+    <section class="lsection cards-showcase" id="l-cards">
+      <span class="section-kicker">Cards for every lifestyle</span><h2>Your wallet,<br>ready to spend.</h2><p class="lsection-sub">Pick your card. Upgrade whenever you want.</p>
+      <div class="cards-grid">
+        <article class="price-card"><div class="mini-card standard">CRIMSON<br><small>•••• 9365</small></div><span class="tier">Standard</span><h3>Everyday freedom</h3><p>Spend up to $50K/month and earn 2% crypto cashback.</p><ul><li>Instant virtual card</li><li>2% crypto cashback</li><li>Global merchant access</li></ul><button class="btn primary block" data-action="goto-auth" data-mode="signup">Get Standard <span>→</span></button></article>
+        <article class="price-card featured"><div class="mini-card premium">CRIMSON<br><small>•••• 9452</small></div><span class="tier">Premium</span><h3>More access, more rewards</h3><p>Higher limits, 4% cashback, and travel privileges.</p><ul><li>Priority Pass lounges</li><li>Personal concierge</li><li>4% crypto cashback</li></ul><button class="btn primary block" data-action="goto-auth" data-mode="signup">Choose Premium <span>→</span></button></article>
+        <article class="price-card"><div class="mini-card metal">CRIMSON<br><small>•••• 9918</small></div><span class="tier">Black Metal</span><h3>Built without compromise</h3><p>Our highest limits, exclusive perks, and dedicated support.</p><ul><li>Brushed metal finish</li><li>Global lounge network</li><li>6% crypto cashback</li></ul><button class="btn primary block" data-action="goto-auth" data-mode="signup">Activate Now <span>→</span></button></article>
       </div>
-    </div>
+    </section>
 
-    <!-- FEES TEASER -->
-    <div class="lsection alt" id="l-fees">
-      <h2>Fees you can actually read</h2>
-      <div class="fee-teaser card-box">
-        <table class="table">
-          <tbody>
-            <tr><td>Monthly / annual fee</td><td class="tr-r"><b>$0</b></td></tr>
-            <tr><td>Card top-up</td><td class="tr-r"><b>1%</b></td></tr>
-            <tr><td>Card payments</td><td class="tr-r"><b>Free</b></td></tr>
-            <tr><td>Foreign exchange (non-USD)</td><td class="tr-r"><b>1.2%</b></td></tr>
-            <tr><td>Crypto deposits</td><td class="tr-r"><b>Free</b></td></tr>
-            <tr><td>ATM withdrawal (physical card)</td><td class="tr-r"><b>2% · min $2</b></td></tr>
-          </tbody>
-        </table>
-        <button class="btn ghost block" data-action="goto-auth" data-mode="signup">See the full fee schedule in the app</button>
-      </div>
-    </div>
+    <section class="lsection security-new" id="l-security"><div><span class="section-kicker">Security first</span><h2>Your funds stay yours.</h2><p>CrimsonPay never takes custody of your wallet. Every action is transparent, reviewable, and controlled by you.</p><div class="security-list"><span>✦ Non-custodial wallet connection</span><span>✦ Real-time payment alerts</span><span>✦ One-tap card freeze</span><span>✦ Around-the-clock support</span></div><button class="btn primary lg" data-action="goto-auth" data-mode="signup">Get Started <span>→</span></button></div><div class="security-shield" data-icon="shield"></div></section>
 
-    <!-- SECURITY -->
-    <div class="lsection" id="l-security">
-      <h2>Security first</h2>
-      <div class="feat-grid three">
-        <div class="feat"><span class="feat-ic" data-icon="lock"></span><h3>2FA &amp; passkeys</h3><p>Protect sign-in and withdrawals with an authenticator app or device passkeys.</p></div>
-        <div class="feat"><span class="feat-ic" data-icon="freeze"></span><h3>Freeze in one tap</h3><p>Lost your phone? Freeze the card instantly — unfreeze just as fast.</p></div>
-        <div class="feat"><span class="feat-ic" data-icon="activity"></span><h3>Device history</h3><p>See every session and sign out remote devices from Settings → Security.</p></div>
-      </div>
-    </div>
+    <section class="lsection faq-wrap" id="l-faq"><span class="section-kicker">Frequently Asked</span><h2>Everything you need<br>to know.</h2><details><summary>How quickly can I get a card?</summary><p>Your virtual card is available immediately after completing the card selection and wallet connection flow.</p></details><details><summary>Which wallets are supported?</summary><p>CrimsonPay supports the leading mobile wallets shown during the connection step.</p></details><details><summary>Can I freeze or replace my card?</summary><p>Yes. Card controls remain available from your dashboard at any time.</p></details><details><summary>Are there hidden charges?</summary><p>No. Card and network costs are shown before you continue.</p></details></section>
 
-    <!-- FAQ -->
-    <div class="lsection alt" id="l-faq">
-      <h2>Frequently asked questions</h2>
-      <div class="faq-wrap">
-        <details class="acc"><summary>Is this a live payment service?</summary><p>This is a <b>preview build for testing</b>. It doesn't process real money, cards or crypto — balances, addresses and card numbers are generated in your browser and nothing is sent to any server. Please don't enter real passwords or ID numbers.</p></details>
-        <details class="acc"><summary>Which cryptocurrencies are supported?</summary><p>BTC, ETH, SOL, USDT and USDC across networks like TRC20, ERC20, BEP20, Bitcoin and Solana.</p></details>
-        <details class="acc"><summary>How do I order a card?</summary><p>Create an account, choose the $10 virtual card or $100 physical card, then continue to the secure wallet payment flow. No identity check is required before payment.</p></details>
-        <details class="acc"><summary>What are the fees?</summary><p>$10 virtual / $100 physical issuance, $0 monthly, 1% top-up, 1.2% FX, 2% ATM (min $2), free deposits, and per-network withdrawal fees. The full schedule is on the Fees page inside the app.</p></details>
-        <details class="acc"><summary>Where would the card be accepted?</summary><p>A real card of this type works anywhere major card networks are accepted — this build simulates purchases with a "Simulate spend" button instead.</p></details>
-        <details class="acc"><summary>Can I reset my data?</summary><p>Yes — Settings → About → "Reset data" restores everything to the initial state.</p></details>
-      </div>
-    </div>
+    <section class="final-cta"><span class="pill">Your crypto. Your card.</span><h2>Ready to spend<br>without limits?</h2><p>Join crypto holders using their assets for everyday payments.</p><button class="btn primary lg" data-action="goto-auth" data-mode="signup">Get Card — Free <span>→</span></button></section>
   </main>
 
-  <footer class="lfooter">
-    <div class="lfooter-inner">
-      <div class="lf-col brand-col">
-        <div class="logo"><span class="logo-mark light" data-icon="diamond"></span><span class="logo-text">CrimsonPay</span></div>
-        <p>Spend crypto like cash.<br>Virtual &amp; physical crypto cards.</p>
-      </div>
-      <div class="lf-col"><h4>Product</h4><a href="#l-cards">Cards</a><a href="#l-fees">Fees</a><a href="#l-features">Features</a><a href="#l-security">Security</a></div>
-      <div class="lf-col"><h4>Company</h4><a href="#l-faq">FAQ</a><a href="#" data-action="legal">About</a><a href="#" data-action="legal">Careers</a></div>
-      <div class="lf-col"><h4>Legal</h4><a href="#" data-action="legal">Terms</a><a href="#" data-action="legal">Privacy</a><a href="#" data-action="legal">Licenses</a></div>
-    </div>
-    <div class="lfooter-note">CrimsonPay is a preview build under development. It is not yet a live financial service and handles no real funds; card issuance goes live once a licensed issuing partner is connected. *Merchant figure illustrative.</div>
-  </footer>
+  <footer class="lfooter"><div class="lfooter-inner"><div class="logo"><span class="logo-mark" data-icon="diamond"></span><span class="logo-text">CRIMSONPAY</span></div><p>Your crypto, ready to spend anywhere.</p><div class="footer-links"><button data-action="legal" data-type="terms">Terms</button><button data-action="legal" data-type="privacy">Privacy</button><button data-action="goto-auth" data-mode="signin">Sign in</button></div><small>© 2026 CrimsonPay. All rights reserved.</small></div></footer>
 </section>
 
 <!-- ══════════════════════ AUTH ══════════════════════ -->
