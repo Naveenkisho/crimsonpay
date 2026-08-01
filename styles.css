@@ -18,12 +18,14 @@
   --dot:radial-gradient(circle at 1px 1px,rgba(255,255,255,.045) 1px,transparent 0);
 }
 *{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
+html{scroll-behavior:smooth;max-width:100%;overflow-x:hidden}
 body{
   font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Inter,system-ui,sans-serif;
   background:var(--bg);color:var(--ink);line-height:1.5;
   -webkit-font-smoothing:antialiased;font-size:15px;
+  max-width:100%;overflow-x:hidden;
 }
+body.modal-open{overflow:hidden;overscroll-behavior:none;touch-action:pan-y;
 h1,h2,h3,h4{line-height:1.15;letter-spacing:-.02em}
 a{color:inherit;text-decoration:none}
 button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
@@ -418,7 +420,7 @@ body[data-admin="1"] .setnav-item[data-tab="business"]{display:block}
 .addr-mid small{display:block;color:var(--ink2);font-size:12px;font-family:ui-monospace,monospace}
 
 /* ============ MODAL ============ */
-.modal-overlay{position:fixed;inset:0;background:rgba(10,12,16,.5);backdrop-filter:blur(4px);z-index:100;display:flex;align-items:center;justify-content:center;padding:20px;animation:fade .2s}
+.modal-overlay{position:fixed;inset:0;background:rgba(10,12,16,.5);backdrop-filter:blur(4px);z-index:100;display:flex;align-items:center;justify-content:center;padding:20px;overflow:hidden;overscroll-behavior:contain;animation:fade .2s}
 .modal{width:100%;max-width:460px;max-height:90vh;overflow-y:auto;animation:pop .25s cubic-bezier(.2,.9,.3,1.2)}
 @keyframes pop{from{opacity:0;transform:scale(.94) translateY(10px)}to{opacity:1;transform:none}}
 .modal-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:18px}
@@ -508,7 +510,7 @@ body[data-admin="1"] .setnav-item[data-tab="business"]{display:block}
 .modal.sheet{padding:0;overflow:hidden;display:flex;flex-direction:column}
 .sheet-head{flex:none;padding:18px 20px 6px}
 .sheet-head .modal-head{margin-bottom:0}
-.sheet-scroll{overflow-y:auto;flex:1 1 auto;min-height:0;padding:6px 20px 14px}
+.sheet-scroll{overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;flex:1 1 auto;min-height:0;padding:6px 20px 14px}
 .sheet-foot{flex:none;padding:14px 20px;border-top:1px solid var(--line);background:var(--surface);display:flex;flex-direction:column;gap:8px;box-shadow:0 -5px 16px rgba(16,20,30,.06)}
 [data-theme="dark"] .sheet-foot{box-shadow:0 -5px 16px rgba(0,0,0,.35)}
 .sheet-foot .btn{width:100%;margin:0}
@@ -662,4 +664,4 @@ body[data-admin="1"] .admin-only{display:flex!important}
 .wallet-phone-hero{perspective:1200px}.wallet-phone-hero img{width:min(100%,680px);filter:drop-shadow(0 38px 52px rgba(0,8,32,.48));transform:rotateY(-3deg) rotateX(1deg);animation:wallet-phone-float 5.5s ease-in-out infinite}@keyframes wallet-phone-float{0%,100%{transform:rotateY(-3deg) rotateX(1deg) translateY(0)}50%{transform:rotateY(2deg) rotateX(-1deg) translateY(-12px)}}
 .card-flip-shell{width:100%;display:block;padding:0;border:0;background:transparent;perspective:1200px;cursor:pointer;color:inherit}.card-flip-inner{position:relative;width:100%;display:block;aspect-ratio:1.586;transform-style:preserve-3d;transition:transform .7s cubic-bezier(.2,.72,.2,1)}.card-flip-shell.is-flipped .card-flip-inner{transform:rotateY(180deg)}.card-face{position:absolute!important;inset:0;width:100%;height:100%;display:flex!important;flex-direction:column;backface-visibility:hidden;-webkit-backface-visibility:hidden;text-align:left}.card-front{justify-content:flex-start}.card-back{transform:rotateY(180deg);padding:0!important;overflow:hidden}.card-face.blue{background:radial-gradient(circle at 90% 0,#2c8eff 0,transparent 34%),linear-gradient(145deg,#114fba,#061a44 70%,#020b20)}.card-face.black{background:radial-gradient(circle at 90% 0,#4c596f 0,transparent 34%),linear-gradient(145deg,#252b36,#080b11 70%,#020305)}
 .emv-chip{width:48px;height:36px;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;margin-top:24px;border:1px solid #8c6b19;border-radius:7px;background:linear-gradient(135deg,#ffeaa1,#bd8718 48%,#f8d875);box-shadow:inset 0 0 0 1px #fff5b466,0 5px 12px #02081755;overflow:hidden}.emv-chip i{border:1px solid #9b731f88}.card-face .num{margin-top:auto;font-size:clamp(17px,4.8vw,24px);letter-spacing:.12em}.card-meta{display:flex;justify-content:space-between;align-items:flex-end;margin-top:17px}.card-meta span{display:flex;flex-direction:column;gap:2px}.card-meta small{font-size:7px;letter-spacing:.12em;opacity:.65}.card-meta b{font-size:10px;letter-spacing:.08em}.tap-card-hint{position:absolute;right:18px;bottom:9px;font-size:7px;letter-spacing:.08em;opacity:.52}.card-back-brand{padding:19px 22px 12px;font-size:12px;font-weight:800}.magnetic-stripe{width:100%;height:54px;display:block;background:#010205}.signature-row{display:flex;align-items:center;margin:23px 20px 0;background:repeating-linear-gradient(0deg,#fff,#fff 3px,#eef2f5 4px);color:#111;min-height:34px}.signature-row i{flex:1;padding:8px;font-family:cursive;font-size:9px}.signature-row b{align-self:stretch;display:flex;align-items:center;padding:0 9px;background:#fff;font-family:ui-monospace,monospace;font-size:11px;white-space:nowrap}.card-back-copy{padding:15px 22px 0;color:#d7e4f5;font-size:7px;line-height:1.45;opacity:.7}.card-switch-content{transition:opacity .14s ease,transform .14s ease}.card-switch-out{opacity:0;transform:translateX(-10px) scale(.985)}.card-switch-in{animation:card-switch-in .28s ease both}@keyframes card-switch-in{from{opacity:0;transform:translateX(12px) scale(.985)}to{opacity:1;transform:none}}.footer-links a{color:inherit;text-decoration:none}.footer-links a:hover{color:var(--primary)}
-@media(max-width:620px){.wallet-phone-hero img{width:100%}.emv-chip{width:42px;height:31px;margin-top:17px}.card-face .num{font-size:15px}.card-meta{margin-top:12px}.magnetic-stripe{height:42px}.signature-row{margin-top:15px}}@media(prefers-reduced-motion:reduce){.wallet-phone-hero img,.card-switch-in{animation:none}.card-flip-inner,.card-switch-content{transition:none}}
+@media(max-width:620px){.order-modal{max-height:calc(100dvh - 40px)}.order-modal .sheet-foot{padding-bottom:max(14px,env(safe-area-inset-bottom))}.wallet-phone-hero img{width:100%}.emv-chip{width:42px;height:31px;margin-top:17px}.card-face .num{font-size:15px}.card-meta{margin-top:12px}.magnetic-stripe{height:42px}.signature-row{margin-top:15px}}@media(prefers-reduced-motion:reduce){.wallet-phone-hero img,.card-switch-in{animation:none}.card-flip-inner,.card-switch-content{transition:none}}
