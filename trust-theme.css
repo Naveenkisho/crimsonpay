@@ -63,3 +63,18 @@
   .lnav-actions .btn.primary{display:inline-flex!important;width:auto!important;min-width:94px!important;min-height:40px!important;padding:0 15px!important;border-radius:12px!important;align-items:center!important;justify-content:center!important;gap:5px!important;font-size:13px!important;font-weight:800!important;white-space:nowrap!important;box-shadow:none!important}
   .lnav-actions .btn.primary span{display:inline!important}
 }
+
+/* Mobile header single-row lock */
+@media(max-width:700px){
+  .lnav-inner{position:relative!important;display:flex!important;flex-flow:row nowrap!important;align-items:center!important;width:100%!important;min-height:68px!important;padding:10px 14px!important;gap:8px!important}
+  .lnav-inner>.logo.cobrand{flex:0 1 auto!important;width:auto!important;max-width:calc(100% - 104px)!important;min-width:0!important;gap:6px!important;white-space:nowrap!important}
+  .lnav-inner>.logo.cobrand .brand-half:first-child{gap:6px!important}
+  .lnav-inner>.logo.cobrand .logo-mark{width:20px!important;height:20px!important}
+  .lnav-inner>.logo.cobrand .brand-half:first-child .logo-text{font-size:14px!important}
+  .lnav-inner>.logo.cobrand .brand-x{font-size:14px!important}
+  .lnav-inner>.logo.cobrand .trust-half{gap:4px!important}
+  .lnav-inner>.logo.cobrand .trust-half img{width:21px!important;height:21px!important}
+  .lnav-inner>.logo.cobrand .trust-half .logo-text{font-size:11px!important}
+  .lnav-actions{position:absolute!important;right:14px!important;top:50%!important;transform:translateY(-50%)!important;margin:0!important;width:auto!important}
+  .lnav-actions .btn.primary{min-width:88px!important;min-height:40px!important;padding:0 12px!important;font-size:12px!important}
+}
