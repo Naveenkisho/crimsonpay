@@ -345,8 +345,8 @@ textarea.input{resize:vertical}
 /* cards panel */
 .cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:18px}
 .mycard{border-radius:16px;padding:20px;color:#fff;position:relative;overflow:hidden;box-shadow:var(--shadow-lg);min-height:200px;display:flex;flex-direction:column;justify-content:space-between}
-.mycard.ruby{background:linear-gradient(135deg,#ff5566,#b3122a 70%,#7d0c1e)}
-.mycard.onyx{background:linear-gradient(135deg,#3a4150,#12151c)}
+.mycard.ruby,.mycard.blue{background:linear-gradient(135deg,#315cff,#1428d4 70%,#091570)}
+.mycard.onyx,.mycard.black{background:linear-gradient(135deg,#25314a,#080b12 72%,#020308)}
 .mycard.frozen:after{content:"FROZEN";position:absolute;inset:0;padding-top:32px;background:rgba(10,12,16,.55) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 2.5v19M4 7l16 10M20 7 4 17M12 5.5 9.6 7.4M12 5.5l2.4 1.9M12 18.5l-2.4-1.9M12 18.5l2.4-1.9M4.6 8.2l.3 2.9M19.4 8.2l-.3 2.9M4.6 15.8l.3-2.9M19.4 15.8l-.3-2.9'/%3E%3C/svg%3E") center calc(50% - 15px)/28px no-repeat;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;letter-spacing:.1em;backdrop-filter:blur(2px)}
 .mycard .num{font-size:19px;letter-spacing:.14em;font-family:ui-monospace,monospace}
 .mycard-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
@@ -519,8 +519,8 @@ body[data-admin="1"] .setnav-item[data-tab="business"]{display:block}
 .color-swatch:hover{border-color:var(--brand)}
 .color-swatch.sel{border-color:var(--brand);background:var(--brand-soft)}
 .cs-dot{width:24px;height:24px;border-radius:50%;flex:none;box-shadow:inset 0 0 0 1px rgba(0,0,0,.14)}
-.color-swatch.ruby .cs-dot{background:linear-gradient(135deg,#ff5566,#b3122a 70%,#7d0c1e)}
-.color-swatch.onyx .cs-dot{background:linear-gradient(135deg,#3a4150,#12151c)}
+.color-swatch.ruby .cs-dot,.color-swatch.blue .cs-dot{background:linear-gradient(135deg,#315cff,#1428d4 70%,#091570)}
+.color-swatch.onyx .cs-dot,.color-swatch.black .cs-dot{background:linear-gradient(135deg,#25314a,#080b12)}
 
 .pay-warn{display:flex;gap:10px;align-items:flex-start;background:color-mix(in srgb,var(--warn) 10%,var(--surface));border:1px solid color-mix(in srgb,var(--warn) 35%,var(--line));border-radius:12px;padding:12px 14px;margin:2px 0}
 .pay-warn .ic{width:18px;height:18px;color:var(--warn);flex:none;margin-top:1px}
@@ -637,3 +637,9 @@ body[data-admin="1"] .admin-only{display:flex!important}
 
 /* professional card order flow */
 .order-progress{display:flex;align-items:flex-start;justify-content:center;margin:18px 0 4px}.order-progress span{width:32px;height:32px;display:grid;place-items:center;border:1px solid var(--line2);border-radius:50%;background:var(--surface2);color:var(--ink2);font-size:12px;font-weight:800;position:relative}.order-progress span.active{border-color:var(--brand);background:var(--brand);color:#fff;box-shadow:0 6px 16px rgba(224,36,58,.22)}.order-progress small{position:absolute;top:37px;width:78px;color:var(--ink2);font-size:9px;font-weight:650}.order-progress i{width:52px;height:1px;margin-top:16px;background:var(--line2)}.card-order-enter{animation:cardOrderIn .28s ease both}.trust-strip{display:flex;align-items:center;justify-content:center;gap:8px;margin:8px 0 16px;padding:10px;border:1px solid color-mix(in srgb,var(--ok) 28%,var(--line));border-radius:11px;background:color-mix(in srgb,var(--ok) 8%,var(--surface));color:var(--ok);font-size:12px;font-weight:700}.card-order-preview{margin:18px 0}.mobile-label{display:block;margin:12px 0 6px;font-size:12px;font-weight:750}.mobile-field{width:100%;min-height:46px;padding:0 12px;border:1px solid var(--line2);border-radius:11px;background:var(--surface);color:var(--ink);font:inherit;outline:none}.mobile-field:focus{border-color:var(--brand);box-shadow:0 0 0 3px color-mix(in srgb,var(--brand) 12%,transparent)}.mobile-row{display:grid;grid-template-columns:auto 1fr;align-items:center;border:1px solid var(--line2);border-radius:11px;overflow:hidden;background:var(--surface)}.mobile-row:focus-within{border-color:var(--brand);box-shadow:0 0 0 3px color-mix(in srgb,var(--brand) 12%,transparent)}.mobile-row span{padding:0 12px;font-weight:750;border-right:1px solid var(--line)}.mobile-row .mobile-field{border:0;border-radius:0;box-shadow:none}.mobile-note{margin:10px 0;color:var(--ink2);font-size:11px;line-height:1.45}.verified-badge{padding:6px 9px;border-radius:999px;background:color-mix(in srgb,var(--ok) 12%,transparent);color:var(--ok);font-size:11px;font-weight:800}@keyframes cardOrderIn{from{opacity:0;transform:translateY(10px) scale(.99)}to{opacity:1;transform:none}}
+
+/* Professional card tier and colour selection */
+.card-tier-visual{min-height:112px;border-radius:15px;padding:15px;margin-bottom:14px;color:#fff;display:grid;grid-template-columns:1fr auto;align-content:space-between;gap:18px;text-align:left;box-shadow:0 12px 28px rgba(10,24,80,.16)}
+.card-tier-visual.blue{background:linear-gradient(135deg,#315cff,#1428d4 70%,#091570)}
+.card-tier-visual.black{background:linear-gradient(135deg,#25314a,#080b12 72%,#020308)}
+.card-tier-visual b{display:flex;align-items:center;gap:6px;font-size:12px;min-width:0}.card-tier-visual>span{font-size:10px;font-weight:800;letter-spacing:.12em;opacity:.8}.card-tier-visual>strong{grid-column:2;grid-row:1/3;align-self:end;font-size:28px}.cardbrand{display:flex;align-items:center;gap:5px}.crimson-brand-mark{display:inline-flex}.brand-times{font-style:normal;opacity:.65}.trust-card-brand{display:inline-flex;align-items:center;gap:4px;white-space:nowrap}.trust-card-brand img{width:16px;height:16px;object-fit:contain;background:#fff;border-radius:5px;padding:2px}.card-network-logo{display:inline-flex;background:#fff;border-radius:6px;padding:4px 7px}.card-network-logo img{display:block;width:38px;height:13px;object-fit:contain}.professional-toggle{padding:4px;border:1px solid var(--line2);border-radius:14px;background:var(--surface2);gap:4px}.professional-toggle .color-swatch{justify-content:center;border:0;border-radius:10px;background:transparent;box-shadow:none}.professional-toggle .color-swatch.sel{background:var(--surface);box-shadow:0 3px 12px rgba(20,28,60,.13);color:var(--brand)}
