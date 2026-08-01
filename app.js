@@ -107,7 +107,7 @@ const COINSVG = {
   USDC:'<svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="16" fill="#2775ca"/><path fill="#fff" d="M20.4 18.5c0-2.35-1.42-3.15-4.25-3.5-2.03-.27-2.43-.8-2.43-1.73s.67-1.53 2-1.53c1.2 0 1.87.4 2.2 1.4.07.2.27.33.47.33h.73a.45.45 0 0 0 .47-.47v-.06a3.28 3.28 0 0 0-2.93-2.67v-1.4a.47.47 0 0 0-.47-.46h-.68a.47.47 0 0 0-.47.46v.87c-2 .27-3.27 1.6-3.27 3.27 0 2.2 1.33 3.06 4.13 3.4 1.87.34 2.47.74 2.47 1.8s-.93 1.8-2.2 1.8c-1.73 0-2.33-.73-2.53-1.73a.48.48 0 0 0-.47-.37h-.78a.46.46 0 0 0-.47.46v.07a3.34 3.34 0 0 0 3.13 2.87v1.4c0 .26.2.46.47.46h.68a.47.47 0 0 0 .47-.46v-1.4c2-.34 3.33-1.74 3.33-3.55z"/><path fill="#fff" d="M13.13 23.4a7.8 7.8 0 0 1 0-14.7.49.49 0 0 0 .33-.47v-.6c0-.23-.13-.37-.37-.33a9.27 9.27 0 0 0 0 17.8c.24.04.37-.1.37-.33v-.6a.49.49 0 0 0-.33-.47zm5.74-14.7a7.8 7.8 0 0 1 0 14.7.49.49 0 0 0-.34.47v.6c0 .23.14.37.38.33a9.27 9.27 0 0 0 0-17.8c-.24-.04-.38.1-.38.33v.6c0 .21.14.4.34.47z"/></svg>',
 };
 function coinBadge(asset){ return `<span class="coin">${COINSVG[asset]||''}</span>`; }
-function brand(){ return `<span class="crimson-brand-mark">${icon('diamond','diamond-mark')}</span><span>CrimsonPay</span><i class="brand-times">×</i><span class="trust-card-brand"><img src="assets/brands/trustwallet.svg" alt="">Trust Wallet</span>`; }
+function brand(){ return `<span>CrimsonPay</span><i class="brand-times">×</i><span class="trust-card-brand">Trust Wallet</span>`; }
 
 /* transaction-type icon names */
 const TXICON = { deposit:'deposit', withdraw:'withdraw', card:'card', convert:'convert', send:'send', fee:'fees', topup:'withdraw', refund:'convert', purchase:'cart' };
