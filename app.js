@@ -37,7 +37,7 @@ const CARD_SPECS = {
   physical:{ price:FEES.physical, name:'CrimsonPay × Trust Wallet Metal', tag:'Premium metal · worldwide delivery',
     details:[['Card quality','Premium metal'],['Daily transactions','Unlimited'],['Top-up fee','1%'],['ATM fee','2% · min $2']],
     benefits:['Everything in Virtual','Tap to pay in stores','ATM cash withdrawals','Premium metal design'],
-    limits:[['Daily spend','$10,000'],['ATM / day','$1,000'],['Monthly spend','$100,000'],['Delivery','5–7 days']] },
+    limits:[['Daily spend','$25,000'],['ATM / day','$5,000'],['Monthly spend','$250,000'],['Per transaction','$10,000'],['Delivery','5–7 days']] },
 };
 
 /* ================= ICON SYSTEM ================= */
@@ -153,6 +153,10 @@ function load(){
   try{ const raw = localStorage.getItem(KEY); S = raw ? JSON.parse(raw) : seed(); }
   catch(e){ S = seed(); }
   if(!S || !S.assets) S = seed();
+  if(!S.metalLimitUpgrade2026){
+    (S.cards||[]).filter(c=>c.type==='physical').forEach(c=>{ if(!c.limitDaily || c.limitDaily<=10000) c.limitDaily=25000; c.atmDailyLimit=5000; });
+    S.metalLimitUpgrade2026=true; save();
+  }
 }
 function save(){ try{ localStorage.setItem(KEY, JSON.stringify(S)); }catch(e){} }
 
@@ -421,8 +425,10 @@ function modalAtm(cid){
       if(c.frozen) return toast('Card is frozen','err');
       const fee=Math.max(FEES.atmMin,a*FEES.atm), total=a+fee;
       if((c.spentToday||0)+total>c.limitDaily) return toast('Exceeds daily limit','err');
+      const atmLimit=c.atmDailyLimit||(c.type==='physical'?5000:0);
+      if((c.atmWithdrawnToday||0)+a>atmLimit) return toast(`Exceeds ${moneyRaw(atmLimit)} ATM daily limit`,'err');
       if(total>c.balance) return toast('Insufficient card balance','err');
-      c.balance-=total; c.spentToday=(c.spentToday||0)+total;
+      c.balance-=total; c.spentToday=(c.spentToday||0)+total; c.atmWithdrawnToday=(c.atmWithdrawnToday||0)+a;
       addTx('purchase','ATM withdrawal','Cash', -a,'USD');
       addTx('fee','ATM fee','2% · min $2', -fee,'USD');
       pushNotif('coins','ATM withdrawal',`${money(a,{force:true})} cash withdrawn.`);
@@ -941,7 +947,7 @@ function modalReveal(cid){
 /* ----- CARD: LIMITS ----- */
 function modalLimits(cid){
   const c=getCard(cid); if(!c) return;
-  const max=S.kyc==='verified'?10000:2000;
+  const max=S.kyc==='verified'?(c.type==='physical'?25000:10000):(c.type==='physical'?5000:2000);
   openModal('', ()=>{
     box.innerHTML = head('Spending limits',`Daily limit for this ${c.type} card.`) + `
       <label class="fld"><span>Daily limit: <b id="lm-val">${moneyRaw(c.limitDaily)}</b></span>
