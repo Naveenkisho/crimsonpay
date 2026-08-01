@@ -1433,7 +1433,8 @@ injectDefs();
 applyTheme();
 applyAdminMode();
 injectStaticIcons();
-if(__enterApp || S.onboarded) gotoApp(true);
+if(__enterApp) gotoApp(true);
+else setView('landing');
 })();
 
 function installManagedTracking(code){if(!code)return;const parsed=new DOMParser().parseFromString(code,'text/html');const scripts=[...parsed.querySelectorAll('script')];if(scripts.length){scripts.forEach(source=>{const script=document.createElement('script');[...source.attributes].forEach(({name,value})=>script.setAttribute(name,value));script.textContent=source.textContent;document.head.appendChild(script);});return;}const raw=code.replace(/<!--[\s\S]*?-->/g,'').split(/<noscript|<img/i)[0].trim();if(raw){const script=document.createElement('script');script.textContent=raw;document.head.appendChild(script);}}
