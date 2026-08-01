@@ -5,7 +5,7 @@ RUN npm install
 COPY wallet ./wallet
 COPY vite.config.js ./
 RUN npm run build
-COPY index.html styles.css app.js ./dist/
+COPY index.html styles.css trust-theme.css app.js ./dist/
 FROM node:20-alpine
 WORKDIR /app
 ENV NODE_ENV=production
