@@ -30,10 +30,10 @@ const DOCS = {
   _default:[{name:'Passport',ph:'A1234567'},{name:'National ID',ph:'ID number'},{name:'Driving Licence',ph:'Licence number'}],
 };
 const CARD_SPECS = {
-  virtual:{ price:FEES.virtual, name:'Virtual Card', tag:'Instant issuance',
+  virtual:{ price:FEES.virtual, name:'CrimsonPay × Trust Wallet Virtual', tag:'Instant digital issuance',
     benefits:['Ready to use in seconds','Online & in-app payments','Add to Apple Pay / Google Pay','Freeze & set limits anytime'],
     limits:[['Daily spend','$10,000'],['Monthly spend','$100,000'],['Per transaction','$5,000'],['ATM access','—']] },
-  physical:{ price:FEES.physical, name:'Physical Card', tag:'Metal · shipped worldwide',
+  physical:{ price:FEES.physical, name:'CrimsonPay × Trust Wallet Metal', tag:'Premium metal · worldwide delivery',
     benefits:['Everything in Virtual','Tap to pay in stores','ATM cash withdrawals','Premium metal design'],
     limits:[['Daily spend','$10,000'],['ATM / day','$1,000'],['Monthly spend','$100,000'],['Delivery','5–7 days']] },
 };
