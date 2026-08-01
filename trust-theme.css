@@ -53,7 +53,11 @@
   .lnav-inner>.logo.cobrand .brand-half:first-child{display:flex!important;align-items:center!important;gap:8px!important}
   .lnav-inner>.logo.cobrand .logo-mark{width:18px!important;height:18px!important;font-size:18px!important;flex:none!important}
   .lnav-inner>.logo.cobrand .logo-text{display:inline!important;font-size:15px!important;font-weight:850!important;text-decoration:none!important;line-height:1!important}
-  .lnav-inner>.logo.cobrand .brand-x,.lnav-inner>.logo.cobrand .trust-half{display:none!important}
+  .lnav-inner>.logo.cobrand .brand-x{display:inline-flex!important;color:#73798b!important;font-size:12px!important;line-height:1!important}
+  .lnav-inner>.logo.cobrand .trust-half{display:flex!important;align-items:center!important;gap:4px!important;color:#0500ff!important}
+  .lnav-inner>.logo.cobrand .trust-half img{display:block!important;width:19px!important;height:19px!important;object-fit:contain!important}
+  .lnav-inner>.logo.cobrand .trust-half .logo-text{display:inline!important;color:#0500ff!important;font-size:10px!important;font-weight:850!important;letter-spacing:-.03em!important;white-space:nowrap!important}
+  .lnav-inner>.logo.cobrand .brand-half:first-child .logo-text{color:#101426!important;font-size:12px!important}
   .lnav-actions{display:flex!important;align-items:center!important;flex:none!important;margin-left:auto!important}
   .lnav-actions .mini-select{display:none!important}
   .lnav-actions .btn.primary{display:inline-flex!important;width:auto!important;min-width:94px!important;min-height:40px!important;padding:0 15px!important;border-radius:12px!important;align-items:center!important;justify-content:center!important;gap:5px!important;font-size:13px!important;font-weight:800!important;white-space:nowrap!important;box-shadow:none!important}
