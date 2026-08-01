@@ -237,7 +237,31 @@ function onboardBanner(){ return `<div class="onboard-banner">${icon('clock')} F
 /* ================= view switching ================= */
 const bodyEl = document.body;
 let firstLoad=false;
-function setView(v){ bodyEl.dataset.view=v; window.scrollTo(0,0); }
+function revealScreen(el){
+  if(!el) return;
+  el.classList.remove('screen-reveal');
+  void el.offsetWidth;
+  el.classList.add('screen-reveal');
+  setTimeout(()=>el.classList.remove('screen-reveal'),420);
+}
+function ensurePublicBack(view){
+  let back=document.getElementById('public-screen-back');
+  if(!back){
+    back=document.createElement('button');
+    back.id='public-screen-back';
+    back.className='screen-back public-screen-back';
+    back.dataset.action='screen-back';
+    back.textContent='← Back';
+    document.body.appendChild(back);
+  }
+  back.classList.toggle('hidden',view!=='auth');
+}
+function setView(v){
+  bodyEl.dataset.view=v;
+  window.scrollTo({top:0,left:0,behavior:'smooth'});
+  ensurePublicBack(v);
+  requestAnimationFrame(()=>revealScreen(document.getElementById('view-'+v)));
+}
 function gotoApp(fresh){
   setView('app');
   applyTheme();
@@ -258,13 +282,26 @@ function applyAdminMode(){
 /* ================= panels ================= */
 const TITLES = { dashboard:'Dashboard', cards:'Cards', txs:'Transactions', fees:'Fees', referral:'Refer & earn', settings:'Settings', help:'Help & support', admin:'Admin console' };
 function showPanel(name){
-  document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('active', p.id==='panel-'+name));
+  const target=document.getElementById('panel-'+name);
+  document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('active',p===target));
   document.querySelectorAll('.navitem[data-panel]').forEach(n=>n.classList.toggle('active', n.dataset.panel===name));
   document.querySelectorAll('.bn-item[data-panel]').forEach(n=>n.classList.toggle('active', n.dataset.panel===name));
-  document.getElementById('page-title').textContent = TITLES[name]||name;
+  const title=document.getElementById('page-title');
+  title.textContent=TITLES[name]||name;
+  let back=document.getElementById('panel-screen-back');
+  if(!back){
+    back=document.createElement('button');
+    back.id='panel-screen-back';
+    back.className='screen-back panel-screen-back';
+    back.dataset.action='screen-back';
+    back.textContent='← Back';
+    title.before(back);
+  }
+  back.classList.toggle('hidden',name==='dashboard');
   const R = { dashboard:renderDashboard, cards:renderCards, txs:renderTxs, fees:renderFees, referral:renderReferral, settings:()=>{}, help:()=>{}, admin:renderAdmin }[name];
   if(R) R();
-  window.scrollTo(0,0);
+  window.scrollTo({top:0,left:0,behavior:'smooth'});
+  requestAnimationFrame(()=>revealScreen(target));
 }
 
 /* ================= DASHBOARD ================= */
@@ -697,10 +734,11 @@ function openModal(html, mount){
   overlay.classList.remove('hidden');
   onModalMount = mount||null;
   if(onModalMount) onModalMount(box);
+  requestAnimationFrame(()=>revealScreen(box));
 }
 function closeModal(){ overlay.classList.add('hidden'); document.body.classList.remove('modal-open'); box.innerHTML=''; onModalMount=null; }
 overlay.addEventListener('click', e=>{ if(e.target===overlay) closeModal(); });
-function head(title, sub){ return `<div class="modal-head"><div><h3>${title}</h3>${sub?`<p>${sub}</p>`:''}</div><button class="iconbtn" data-action="modal-close">${icon('x')}</button></div>`; }
+function head(title, sub){ return `<div class="modal-head"><div class="modal-head-copy"><button class="screen-back modal-screen-back" data-action="screen-back">← Back</button><div><h3>${title}</h3>${sub?`<p>${sub}</p>`:''}</div></div><button class="iconbtn" data-action="modal-close">${icon('x')}</button></div>`; }
 function resultCard(kind, title, body, btn){
   return `<div class="center-txt"><div class="result-ic ${kind==='ok'?'ok':'warn'}">${icon(kind==='ok'?'check':'x')}</div>
     <h3>${title}</h3><p class="muted" style="margin:8px 0 16px">${body}</p>${btn||'<button class="btn primary block" data-action="modal-close">Done</button>'}</div>`;
@@ -1308,6 +1346,18 @@ function testAccount(){
 }
 
 /* ================= EVENT DELEGATION ================= */
+document.addEventListener('click',e=>{
+  const control=e.target.closest('button,.btn,a[href]');
+  if(!control||control.disabled||control.classList.contains('button-loading')) return;
+  control.classList.add('button-loading');
+  setTimeout(()=>control.classList.remove('button-loading'),520);
+  if(control.tagName==='A'&&control.href&&control.origin===location.origin&&!control.hash&&control.target!=='_blank'){
+    const next=control.href;
+    e.preventDefault();
+    showLoader('Opening screen…','Just a moment');
+    setTimeout(()=>{ location.href=next; },220);
+  }
+},true);
 document.addEventListener('click', e=>{
   const t=e.target.closest('[data-action]'); if(!t) return;
   const a=t.dataset.action;
@@ -1398,6 +1448,15 @@ document.addEventListener('click', e=>{
     case 'notif-close': closeDrawer(); break;
     case 'notif-readall': S.notifs.forEach(n=>n.read=true); save(); updateBell(); openDrawer(); break;
 
+    case 'screen-back': {
+      if(!overlay.classList.contains('hidden')){
+        const stepBack=box.querySelector('#ca-back,#wd-back,[data-modal-back]');
+        if(stepBack) stepBack.click(); else closeModal();
+      } else if(bodyEl.dataset.view==='app') showPanel('dashboard');
+      else if(bodyEl.dataset.view==='auth') setView('landing');
+      else if(history.length>1) history.back();
+      else setView('landing');
+    } break;
     case 'modal-close': closeModal(); break;
   }
 });
